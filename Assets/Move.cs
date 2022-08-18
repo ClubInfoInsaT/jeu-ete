@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-    
+    [Header("Visualizer")]
+
     [Header("Basic Variables")]
 
     private Rigidbody2D rb;
@@ -12,7 +13,7 @@ public class Move : MonoBehaviour
     private Vector2 velocity;
     private bool canJump = false;
     private float tol = 2f;
-    private float gravityForce = -9.81f;
+    public float gravityForce = -9.81f;
     public Transform groundCheck;
     //public Transform wallCheck;
 
@@ -25,11 +26,8 @@ public class Move : MonoBehaviour
     private Vector3 defaultScale;
     private float jumps;
     private float lastJump;
-    private bool isRunning;
-    private bool isWalking;
-    private bool isCrouching;
 
-    
+
     public float crouchJump = 4f;
     public float normalJump = 7.5f;
     public float stopForce;
@@ -37,11 +35,6 @@ public class Move : MonoBehaviour
     public float CrouchSpeed;
     public float jumpNumber=2;
     public float jumpCD=0.5f;
-    public Animator Anim;
-
-
-
-    //public Vector2 wallJumpDirection;
 
 
     // Start is called before the first frame update
@@ -53,31 +46,34 @@ public class Move : MonoBehaviour
         lastJump = Time.time;
     }
 
-    // Update is called once per frame
     void Update()
     {
         velocity = rb.velocity;
-        move();
-        jump();
-        flip();
         gravity();
+        move();
+        flip();
+        jump();
         Crouch();
-        rb.velocity = velocity;
         canJump = true;
+        rb.velocity = velocity;
     }
+
     void move()
     {
-        if (Input.GetButton("Sprint"))
+        if (canJump)
         {
-            moveForce = SprintSpeed;
-        }
-        else if (Input.GetButton("Crouch"))
-        {
-            moveForce = CrouchSpeed;      
-        }
-        else
-        {
-            moveForce = WalkSpeed;  
+            if (Input.GetButton("Sprint"))
+            {
+                moveForce = SprintSpeed;
+            }
+            else if (Input.GetButton("Crouch"))
+            {
+                moveForce = CrouchSpeed;
+            }
+            else
+            {
+                moveForce = WalkSpeed;
+            }
         }
 
         horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -90,7 +86,6 @@ public class Move : MonoBehaviour
         if (horizontalInput != 0)
         {
             rb.AddForce(new Vector2(horizontalInput * moveForce * Time.deltaTime, 0f)); // Ajout de force pour le déplacement | Modification possible en modifiant la vélocité 
-            
         }
         else
         {
@@ -118,30 +113,25 @@ public class Move : MonoBehaviour
         else
         {
             jumps = jumpNumber;
+            canJump = true; 
         }
-
-        if (!canJump)
-        {
-            Anim.SetBool("Jump", true);
-        }
+        
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             velocity.y += stopForce;
         }
-
-        if ( Input.GetButtonDown("Jump") && (jumps > 1 || canJump))
+        if ( Input.GetButtonDown("Jump") && (jumps > 0 || canJump))
         {
             if(Mathf.Abs(Time.time - lastJump) >= jumpCD)
             {
                 velocity.y = 0f;
+                velocity.y += jumpForce;
                 canJump = false;
                 jumps--;
-                velocity.y += jumpForce;
             }
-             
-        }
-        
+        }   
     } 
+    
     void gravity()
     {
         if (!canJump)
@@ -152,16 +142,17 @@ public class Move : MonoBehaviour
     }
     void flip()
     {
-        Vector3 Scale = rb.transform.localScale;
-        if(velocity.x <0f)
-         {
-            Scale.x = defaultScale.x*-1f;
-        }
-         else if (velocity.x > 0)    
-         {
-            Scale.x = defaultScale.x;
-         }
-        rb.transform.localScale = Scale;
+        switch (horizontalInput)
+        {
+            case -1:
+                GetComponent<SpriteRenderer>().flipX = true;
+                break;
+            case 1:
+                GetComponent<SpriteRenderer>().flipX = false;
+                break;
+            default:
+                break;
+        }   
     }
 
     void Crouch()
@@ -177,11 +168,7 @@ public class Move : MonoBehaviour
             Scale.y = defaultScale.y;
             jumpForce = normalJump;
         }
-            
         rb.transform.localScale = Scale;
     }
-    /*private bool canJump()
-    {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.3f, LayerMask.GetMask("Ground"));    // Fonction Vérification
-    }*/ 
+   
 }
