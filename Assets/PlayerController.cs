@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Layer à utiliser pour identifier le sol")] public LayerMask groundMask;
     [Tooltip("Position du vérificateur de mur nécessaire au wall jump")] public Transform wallCheck;
     [Tooltip("Layer a utiliser pour identifier un mur")] public LayerMask wallMask;
+    [Tooltip("Caméra attachée au joueur")] public Transform cam;
 
     [Header("Move Variables")]
     [Tooltip("Vitesse de marche")] public float defaultSpeed;
@@ -26,8 +27,8 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Temps d'attente entre 2 sauts")]public float jumpCooldown;
     [Tooltip("Multiplieur réducteur pour ralentir la vitesse pendant le saut et la distance par la même occasion")][Range(0,1f)] public float jumpMultiplier;
     private float lastJump;
-    private bool isGrounded; 
-
+    private bool isGrounded;
+    private Collider2D groundCollider;
 
     // [Header("Wall Sliding and Jumping variables")]
 
@@ -49,6 +50,12 @@ public class PlayerController : MonoBehaviour
         vertical = Input.GetAxisRaw("Vertical");
         Speed();
         Flip();
+        PlatformManager();
+        if(Mathf.Abs(cam.position.x - rb2D.position.x)> 10f)
+        {
+            cam.position = new Vector3(rb2D.position.x, cam.position.y, cam.position.z);
+        }
+        
     }
 
     void FixedUpdate()
@@ -86,9 +93,8 @@ public class PlayerController : MonoBehaviour
     }
     void Jumping()
     {
-        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(0.3f, 0.03f),0f, groundMask) ; 
-
-        Debug.Log(isGrounded);
+        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(0.3f, 0.03f),0f, groundMask) ;
+       
         if (isGrounded && Input.GetButton("Jump"))
         {
             if(Time.time - lastJump > jumpCooldown)
@@ -115,5 +121,38 @@ public class PlayerController : MonoBehaviour
         {
             gameObject.GetComponent<SpriteRenderer>().flipX = false;
         }
+    }
+
+    void PlatformManager()
+    {
+        groundCollider = Physics2D.OverlapBox(groundCheck.position, new Vector2(0.3f, 0.03f), 0f, groundMask);
+        if (groundCollider != null && groundCollider.CompareTag("Platform"))
+        {
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                
+                StartPass();
+                Invoke(nameof(StopPass), 0.3f);
+                
+            }
+        }
+    }
+
+    void SpikeManager()
+    {
+        Death(); 
+    }
+
+    void Death()
+    {
+        gameObject.GetComponent<Collider2D>().enabled = false;  
+    }
+    void StartPass()
+    {
+        gameObject.GetComponent<Collider2D>().enabled = false;
+    }
+    void StopPass()
+    {
+        gameObject.GetComponent<Collider2D>().enabled = true;
     }
 }
