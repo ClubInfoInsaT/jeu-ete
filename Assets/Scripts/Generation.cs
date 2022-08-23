@@ -8,8 +8,8 @@ public class Generation : MonoBehaviour
 
 	private ChunkTemplate templates;
     private Transform gridTrans;
-	private int rand;
-
+    private Vector3 newPos;
+    private GameObject newChunk; 
     // Start is called before the first frame update
     void Start()
     {
@@ -21,9 +21,15 @@ public class Generation : MonoBehaviour
 
     void Spawn()
     {
-
-        rand = Random.Range(0, templates.chunks.Length);
-        Instantiate(templates.chunks[rand], transform.position, Quaternion.identity, gridTrans);
-
+        newPos = transform.position; 
+        for (int i = 0; i < 10; i++)
+        {
+            Debug.Log(newPos);
+            newChunk = templates.chunks[Random.Range(0, templates.chunks.Length)];
+            Debug.Log(newChunk.transform.GetComponent<UnityEngine.Tilemaps.Tilemap>().size);
+            newPos += new Vector3(newChunk.transform.GetComponent<UnityEngine.Tilemaps.Tilemap>().size.x / 2, 0, 0);
+            Instantiate(newChunk, newPos, Quaternion.identity, gridTrans);
+            newPos += new Vector3(newChunk.transform.GetComponent<UnityEngine.Tilemaps.Tilemap>().size.x / 2, 0,0); 
+        }
     }
 }
