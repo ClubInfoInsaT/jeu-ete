@@ -7,20 +7,23 @@ public class Generation : MonoBehaviour
 
 
 	private ChunkTemplate templates;
+    private Transform gridTrans;
 	private int rand;
 
     // Start is called before the first frame update
     void Start()
     {
         templates = GameObject.FindGameObjectWithTag("Chunks").GetComponent<ChunkTemplate>();
-		Invoke("Spawn", 0.1f);
+        gridTrans = GameObject.FindGameObjectWithTag("Grid").transform;
+
+        Invoke("Spawn", 0.1f);
     }
 
     void Spawn()
     {
 
         rand = Random.Range(0, templates.chunks.Length);
-        Instantiate(templates.chunks[rand], transform.position, Quaternion.identity);
+        Instantiate(templates.chunks[rand], transform.position, Quaternion.identity, gridTrans);
 
     }
 }
