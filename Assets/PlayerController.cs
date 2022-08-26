@@ -8,11 +8,13 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Main Components")]
     [Tooltip("Corps du personnage responsable des forces et mouvements")] public Rigidbody2D rb2D;
+    [Tooltip("Corps du personnage responsable des collisions")] public Collider2D bodyCollider; 
     [Tooltip("Position du vérificateur de sol nécessaire au saut")] public Transform groundCheck;
     [Tooltip("Layer à utiliser pour identifier le sol")] public LayerMask groundMask;
     [Tooltip("Position du vérificateur de mur nécessaire au wall jump")] public Transform wallCheck;
     [Tooltip("Layer a utiliser pour identifier un mur")] public LayerMask wallMask;
     [Tooltip("Caméra attachée au joueur")] public Transform cam;
+    
 
     [Header("Move Variables")]
     [Tooltip("Vitesse de marche")] public float defaultSpeed;
@@ -29,6 +31,10 @@ public class PlayerController : MonoBehaviour
     private float lastJump;
     private bool isGrounded;
     private Collider2D groundCollider;
+
+    [Header("Death Variables")]
+    public float jumpHeight;
+    [Tooltip("Hauteur du saut lors de l'animation de mort")][Min(15)] private bool isDead = false;
 
     // [Header("Wall Sliding and Jumping variables")]
 
@@ -49,8 +55,7 @@ public class PlayerController : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
         Speed();
-        Flip();
-        PlatformManager();
+        plat();
         if(Mathf.Abs(cam.position.x - rb2D.position.x)> 10f)
         {
             cam.position = new Vector3(rb2D.position.x, cam.position.y, cam.position.z);
@@ -60,8 +65,13 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Moving();
-        Jumping();
+        if (!isDead)
+        {
+            Moving();
+            Flip();
+            Jumping();
+        }
+        
     }
 
     void Speed()
@@ -123,7 +133,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void PlatformManager()
+    void plat()
     {
         groundCollider = Physics2D.OverlapBox(groundCheck.position, new Vector2(0.3f, 0.03f), 0f, groundMask);
         if (groundCollider != null && groundCollider.CompareTag("Platform"))
@@ -131,8 +141,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.DownArrow))
             {
                 
-                StartPass();
-                Invoke(nameof(StopPass), 0.3f);
+                
                 
             }
         }
@@ -143,16 +152,27 @@ public class PlayerController : MonoBehaviour
         Death(); 
     }
 
+    void SlimyManager()
+    {
+        return;
+    }
+
     void Death()
     {
-        gameObject.GetComponent<Collider2D>().enabled = false;  
+        bodyCollider.enabled = false;
+        rb2D.gravityScale *= 0.5f;
+        rb2D.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
+        isDead = true;
     }
-    void StartPass()
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        gameObject.GetComponent<Collider2D>().enabled = false;
+        if (collision.gameObject.CompareTag("Spike"))
+        {
+            SpikeManager();
+        }
     }
-    void StopPass()
-    {
-        gameObject.GetComponent<Collider2D>().enabled = true;
-    }
+
+
+
 }
