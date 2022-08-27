@@ -58,7 +58,6 @@ public class PlayerController : MonoBehaviour
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
         Speed();
-        plat();
         if(Mathf.Abs(cam.position.x - rb2D.position.x)> 10f)
         {
             cam.position = new Vector3(rb2D.position.x, cam.position.y, cam.position.z);
@@ -86,11 +85,14 @@ public class PlayerController : MonoBehaviour
         }
         else if(Input.GetButton("Sprint"))
         {
-            moveSpeed = defaultSpeed * sprintMultiplier; 
+            moveSpeed = defaultSpeed * sprintMultiplier;
+            anim.SetBool("isRunning", true);
         }
         else
         {
-            moveSpeed = defaultSpeed; 
+            moveSpeed = defaultSpeed;
+            anim.SetBool("isRunning", false);
+            anim.SetBool("isCrouching", false);
         }
         if (!isGrounded)
         {
@@ -101,13 +103,21 @@ public class PlayerController : MonoBehaviour
     {
         if(horizontal > 0.1f ||horizontal < -0.99f)
         {
+            anim.SetBool("isWalking", true);
             rb2D.AddForce(new Vector2(horizontal * moveSpeed,0f),ForceMode2D.Impulse);
+        }
+        else
+        {
+            anim.SetBool("isWalking", false);
         }
     }
     void Jumping()
     {
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(0.3f, 0.03f),0f, groundMask) ;
-       
+        if (isGrounded)
+        {
+            anim.SetBool("Jump", false);
+        }
         if (isGrounded && Input.GetButton("Jump"))
         {
             if(Time.time - lastJump > jumpCooldown)
@@ -115,13 +125,14 @@ public class PlayerController : MonoBehaviour
                 lastJump = Time.time;   
                 rb2D.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
                 isGrounded = false;
+                anim.SetBool("Jump", true);
             }
             
         }
     }
     void Crouch()
     {
-        return; 
+        anim.SetBool("isCrouching", true);
     }
 
     void Flip()
@@ -136,19 +147,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void plat()
-    {
-        groundCollider = Physics2D.OverlapBox(groundCheck.position, new Vector2(0.3f, 0.03f), 0f, groundMask);
-        if (groundCollider != null && groundCollider.CompareTag("Platform"))
-        {
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
-                
-                
-                
-            }
-        }
-    }
 
     void SpikeManager()
     {
