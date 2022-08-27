@@ -36,6 +36,9 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight;
     [Tooltip("Hauteur du saut lors de l'animation de mort")][Min(15)] private bool isDead = false;
 
+    [Header("Animation Variables")]
+    public Animator anim; 
+
     // [Header("Wall Sliding and Jumping variables")]
 
 
@@ -163,6 +166,7 @@ public class PlayerController : MonoBehaviour
         rb2D.gravityScale *= 0.5f;
         rb2D.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
         isDead = true;
+        anim.SetBool("isDead", true);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

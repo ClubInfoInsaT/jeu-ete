@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 82683912}
   - component: {fileID: 82683916}
   - component: {fileID: 82683911}
+  - component: {fileID: 82683917}
   m_Layer: 7
   m_Name: Player Updated
   m_TagString: Player
@@ -174,6 +175,7 @@ MonoBehaviour:
   jumpCooldown: 0.33
   jumpMultiplier: 0.5
   jumpHeight: 15
+  anim: {fileID: 82683917}
 --- !u!70 &82683912
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -306,6 +308,26 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.59375, y: 0.15634769}
   m_EdgeRadius: 0
+--- !u!95 &82683917
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82683910}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7c236fb7bb4db264c94b60249d0a3038, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &146934656
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,7 +604,7 @@ GameObject:
   - component: {fileID: 266392349}
   m_Layer: 6
   m_Name: Wall Layer
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1701,7 +1723,7 @@ GameObject:
   - component: {fileID: 747400875}
   - component: {fileID: 747400874}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: 'Map '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1904,7 +1926,7 @@ Tilemap:
   m_GameObject: {fileID: 1902558588}
   m_Enabled: 1
   m_Tiles:
-  - first: {x: -2, y: -4, z: 0}
+  - first: {x: 7, y: -4, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 0
@@ -1914,7 +1936,7 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: -1, y: -4, z: 0}
+  - first: {x: 8, y: -4, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 0
@@ -1957,7 +1979,7 @@ Tilemap:
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -2, y: -4, z: 0}
-  m_Size: {x: 2, y: 4, z: 1}
+  m_Size: {x: 11, y: 4, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
