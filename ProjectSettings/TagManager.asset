@@ -3,21 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-<<<<<<< HEAD
-  - Spike
-  - Platform
-  - Ground
-  - Wall
-=======
-  - Chunks
-  - Grid
->>>>>>> 2a886704a0e4acf896579e7a6a5cc65f17dfe07f
+  tags: []
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
   - 
