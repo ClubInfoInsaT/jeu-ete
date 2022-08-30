@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Spike
+  - Platform
+  - Ground
+  - Wall
   layers:
   - Default
   - TransparentFX
