@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private enum clips {Jump};
     [Header("Main Components")]
     [Tooltip("Corps du personnage responsable des forces et mouvements")] public Rigidbody2D rb2D;
     [Tooltip("Corps du personnage responsable des collisions")] public Collider2D bodyCollider; 
@@ -13,7 +14,8 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Layer à utiliser pour identifier le sol")] public LayerMask groundMask;
     [Tooltip("Position du vérificateur de mur nécessaire au wall jump")] public Transform wallCheck;
     [Tooltip("Layer a utiliser pour identifier un mur")] public LayerMask wallMask;
-    
+    public AudioClip[] cliplist;
+    public AudioSource source; 
 
     [Header("Move Variables")]
     [Tooltip("Vitesse de marche")] public float defaultSpeed;
@@ -49,6 +51,7 @@ public class PlayerController : MonoBehaviour
         moveSpeed = defaultSpeed;
         isGrounded = false;
         lastJump = Time.time;
+        source.volume = 0.5f;
     }
 
     // Update is called once per frame
@@ -112,6 +115,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             anim.SetBool("Jump", false);
+            source.Stop();
         }
         if (isGrounded && Input.GetButton("Jump"))
         {
@@ -121,6 +125,9 @@ public class PlayerController : MonoBehaviour
                 rb2D.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
                 isGrounded = false;
                 anim.SetBool("Jump", true);
+                source.clip = cliplist[0];
+                source.Play();
+                
             }
             
         }
