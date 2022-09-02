@@ -21,10 +21,9 @@ public class PauseMenu : MonoBehaviour
         
         if (Input.GetKey(KeyCode.Escape))
         {
-            
             PauseGame();
         }
-
+        Debug.Log("1");
     }
 
     void PauseGame()
@@ -44,8 +43,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         source.Play();
         GameUI.SetActive(true);
-        PauseUI.SetActive(false);
-        
+        PauseUI.SetActive(false);  
     }
     public void DisplayControl()
     {
