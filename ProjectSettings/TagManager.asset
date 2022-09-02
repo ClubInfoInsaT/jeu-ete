@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Chunks
   - Grid
+  - Platform
   layers:
   - Default
   - TransparentFX
