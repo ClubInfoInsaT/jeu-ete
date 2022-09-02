@@ -12,7 +12,15 @@ public class ScoreManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(CameraMove.countDown > 0)
+        {
+            lastTime = Time.time;
+            text.enabled  = false;
+            return;
+        }
+        {
+            text.enabled = true;
+        }
         if (Time.time -  lastTime >= 10f && Time.time >1f && !PlayerController.playerDead())
         {
             lastTime = Time.time;

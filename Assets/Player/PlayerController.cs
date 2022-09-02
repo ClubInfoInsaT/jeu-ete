@@ -8,14 +8,15 @@ public class PlayerController : MonoBehaviour
 {
     private enum clips {Jump};
     [Header("Main Components")]
+    [Tooltip("Position de départ du personnage")] public Transform spawn;
     [Tooltip("Corps du personnage responsable des forces et mouvements")] public Rigidbody2D rb2D;
     [Tooltip("Corps du personnage responsable des collisions")] public Collider2D bodyCollider; 
     [Tooltip("Position du vérificateur de sol nécessaire au saut")] public Transform groundCheck;
     [Tooltip("Layer à utiliser pour identifier le sol")] public LayerMask groundMask;
     [Tooltip("Position du vérificateur de mur nécessaire au wall jump")] public Transform wallCheck;
     [Tooltip("Layer a utiliser pour identifier un mur")] public LayerMask wallMask;
-    public AudioClip[] cliplist;
-    public AudioSource source; 
+    [Tooltip("Liste de sons jouable par le joueur (exemple : Saut)")] public AudioClip[] cliplist;
+    [Tooltip("Source d'émission audio")] public AudioSource source; 
 
     [Header("Move Variables")]
     [Tooltip("Vitesse de marche")] public float defaultSpeed;
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb2D = gameObject.GetComponent<Rigidbody2D>();
-
+        rb2D.gameObject.transform.position= spawn.position;
         moveSpeed = defaultSpeed;
         isGrounded = false;
         lastJump = Time.time;
@@ -57,14 +58,21 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(CameraMove.countDown > 0)
+        {
+            return;
+        }
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
         Speed();
-        
     }
 
     void FixedUpdate()
     {
+        if (CameraMove.countDown > 0)
+        {
+            return;
+        }
         if (!isDead)
         {
             Moving();
