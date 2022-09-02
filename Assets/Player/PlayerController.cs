@@ -48,7 +48,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb2D = gameObject.GetComponent<Rigidbody2D>();
-        rb2D.gameObject.transform.position= spawn.position;
+        if(spawn != null){
+            rb2D.gameObject.transform.position = spawn.position;
+        }
         moveSpeed = defaultSpeed;
         isGrounded = false;
         lastJump = Time.time;
