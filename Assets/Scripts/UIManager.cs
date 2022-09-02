@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
     int index;
+    enum UIList {Title, Main,Credit, Control, Rule }
     public GameObject[] UIs;
 
     private void Start()
@@ -36,8 +38,33 @@ public class UIManager : MonoBehaviour
     {
         Application.Quit();
     }
-    public void Test()
+
+    public void Back()
     {
-        return;
+        UIs[index].SetActive(false);
+        index = (int)UIList.Main;
+        UIs[index].SetActive(true);
+    }
+    public void Controls()
+    {
+        UIs[index].SetActive(false);
+        index = (int)UIList.Control;
+        UIs[index].SetActive(true);
+    }
+    public void Rule()
+    {
+        UIs[index].SetActive(false);
+        index = (int)UIList.Rule;
+        UIs[index].SetActive(true);
+    }
+    public void Credits()
+    {
+        UIs[index].SetActive(false);
+        index = (int)UIList.Credit;
+        UIs[index].SetActive(true);
+    }
+    public void Launch()
+    {
+        SceneManager.LoadScene("Generation");
     }
 }

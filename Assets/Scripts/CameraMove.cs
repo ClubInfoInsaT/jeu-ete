@@ -7,7 +7,7 @@ public class CameraMove : MonoBehaviour
 {
     public Transform cameraPos;
     public float speed;
-    public static float countDown = 5; 
+    public static float countDown = 3; 
     public TMP_Text text;
     private void Start()
     {
@@ -31,9 +31,7 @@ public class CameraMove : MonoBehaviour
         if (!PlayerController.playerDead())
         {
             cameraPos.Translate(speed * Time.deltaTime * Vector2.right);
-        }
-       
-    
+        }       
 
     }
 }
