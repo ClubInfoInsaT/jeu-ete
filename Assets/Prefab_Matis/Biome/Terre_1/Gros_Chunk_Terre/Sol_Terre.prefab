@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 5571718556228776905}
   - component: {fileID: 5715908680353832033}
   - component: {fileID: 5026573473915577147}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sol_Terre
   m_TagString: Untagged
   m_Icon: {fileID: 0}

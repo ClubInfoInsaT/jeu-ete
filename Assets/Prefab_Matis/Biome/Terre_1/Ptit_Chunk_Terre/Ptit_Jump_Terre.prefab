@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 6921858505465553472}
   - component: {fileID: 5185351050303125471}
   - component: {fileID: 440613504291829060}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ptit_Jump_Terre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
