@@ -301,9 +301,9 @@ RectTransform:
   m_Father: {fileID: 70947784620058339}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &872063436
@@ -481,10 +481,10 @@ RectTransform:
   m_Father: {fileID: 552487973}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -392.13696, y: 172.21312}
-  m_SizeDelta: {x: -44.999023, y: -59.487488}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 55.000977, y: 40.512512}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &941459327298250512
 MonoBehaviour:
@@ -997,7 +997,6 @@ GameObject:
   - component: {fileID: 958600710785477975}
   - component: {fileID: 7280824136300877916}
   - component: {fileID: 7636022304876065940}
-  - component: {fileID: 8565682316948050605}
   m_Layer: 5
   m_Name: Countdown
   m_TagString: Untagged
@@ -1560,16 +1559,3 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8565682316948050605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5320121970646215618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0cbf5649fefc4942a631df3108e28f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 7636022304876065940}

@@ -7,8 +7,10 @@ public class CameraMove : MonoBehaviour
 {
     public Transform cameraPos;
     public float speed;
-    public static float countDown = 3; 
+    public static float countDown = 5; 
     public TMP_Text text;
+
+
     private void Start()
     {
         text.enabled = true;
@@ -17,7 +19,7 @@ public class CameraMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(countDown > 0)
+        if(countDown > 0f)
         {
             countDown -= Time.deltaTime;
             text.enabled = true;
