@@ -8,13 +8,12 @@ public class Generation : MonoBehaviour
 
 	private ChunkTemplate templates;
     private Transform gridTrans;
-    private GameObject newChunk; 
+    private GameObject newChunk;
     // Start is called before the first frame update
     void Start()
     {
         templates = GameObject.FindGameObjectWithTag("Chunks").GetComponent<ChunkTemplate>();
         gridTrans = GameObject.FindGameObjectWithTag("Grid").transform;
-
         Invoke("Spawn", 0.1f);
     }
 
