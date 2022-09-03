@@ -27,7 +27,7 @@ public class PauseMenu : MonoBehaviour
         }
         if (PlayerController.playerDead())
         {
-            Invoke("GameOverDisplay", 2f);
+            Invoke("GameOverDisplay", 1f);
         }
     }
 
