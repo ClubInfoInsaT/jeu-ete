@@ -1,40 +1,52 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Generation : MonoBehaviour
 {
-
-
-	private ChunkTemplate templates;
-    private Transform gridTrans;
+    public GameObject[] chunks;
+    public int TerrainWindowSize; 
+ 
+    //[SerializeField]
+    private GameObject[] Terrain; //Sliding window 
+    //[SerializeField]
+    private int CurrentChunkIndex = 0; // between 0 and TerrainWindowSize-1
+	private Transform gridTrans;
     private GameObject newChunk;
     // Start is called before the first frame update
     void Start()
     {
-        templates = GameObject.FindGameObjectWithTag("Chunks").GetComponent<ChunkTemplate>();
         gridTrans = GameObject.FindGameObjectWithTag("Grid").transform;
-        Invoke("Spawn", 0.1f);
+        Terrain = new GameObject[TerrainWindowSize];
+        //Generating initial chunks
+        for (int i = 0; i < TerrainWindowSize; i++)
+        {
+            Invoke("SpawnChunk", 0.1f);
+        }
+
     }
 
-    void Spawn()
+    // Instantiate a new chunk to replace the useless one
+    public void SpawnChunk() 
     {
-        float newPos = 0f;
-        newChunk = templates.chunks[Random.Range(0, templates.chunks.Length)];
-        for (int i = 0; i < 10; i++)
-        {
-            Debug.Log("["+ newChunk.transform.name + "]"+"New Position : "+new Vector3(newPos, 0, 0));
-            Instantiate(newChunk, new Vector3(newPos,0,0) , Quaternion.identity, gridTrans);
-            Debug.Log("[" + newChunk.transform.name + "]" + " size :" + newChunk.transform.GetChild(0).GetComponent<UnityEngine.Tilemaps.Tilemap>().size.x);
-            newPos += newChunk.transform.GetChild(0).GetComponent<UnityEngine.Tilemaps.Tilemap>().size.x;
-            newChunk = templates.chunks[Random.Range(0, templates.chunks.Length)];
-            
+        // randomly selecting a chunk in the chunk list
+        // (no proximity constraint for now)
+        newChunk = chunks[Random.Range(0, chunks.Length)];
+        // chunk instance position is next to the previous one (or 0 if first)
+        //Debug.Log("prev index: "+(CurrentChunkIndex + TerrainWindowSize - 1) % 10);
+        float newPos = Terrain[(CurrentChunkIndex + TerrainWindowSize - 1) % 10] == null ? 0 : ( Terrain[ (CurrentChunkIndex + TerrainWindowSize - 1) % 10 ].transform.position.x + Terrain[ (CurrentChunkIndex + TerrainWindowSize - 1) % 10 ].transform.GetChild(0).GetComponent<UnityEngine.Tilemaps.Tilemap>().size.x );
+        //deleting previous chunk
+        if(Terrain[CurrentChunkIndex] != null)
+            Destroy(Terrain[CurrentChunkIndex]);
+        // adding chunk to terrain window
+        Terrain[CurrentChunkIndex] = Instantiate(newChunk, new Vector3(newPos,0,0) , Quaternion.identity, gridTrans);
+        //Debug.Log("newChunk = "+ newChunk+" newPos = "+newPos+" CurrentChunkIndex = "+CurrentChunkIndex);
 
-            //newChunk = templates.chunks[Random.Range(0, templates.chunks.Length)];
-
-            //newPos += new Vector3(newChunk.transform.GetComponent<UnityEngine.Tilemaps.Tilemap>().size.x / 2, 0, 0);
-            //Instantiate(newChunk, newPos, Quaternion.identity, gridTrans);
-            //newPos += new Vector3(newChunk.transform.GetComponent<UnityEngine.Tilemaps.Tilemap>().size.x / 2, 0,0); 
-        }
+        //updating chunk index in the terrain window
+        CurrentChunkIndex = (CurrentChunkIndex + 1) % 10; 
+        
     }
 }
