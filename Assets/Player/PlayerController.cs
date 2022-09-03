@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
         }
         moveSpeed = defaultSpeed;
         isGrounded = false;
+        isDead = false;
         lastJump = Time.time;
         source.volume = 0.5f;
     }

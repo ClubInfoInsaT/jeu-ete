@@ -7,13 +7,15 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     enum UIlist {Menu, Controls}
-    public GameObject PauseUI,GameUI;
+    public GameObject PauseUI,GameUI,DeathUI;
     public GameObject[] UIs;
     public AudioSource source;
 
     private void Start()
     {
-        ResumeGame();
+        GameUI.SetActive(true);
+        PauseUI.SetActive(false);
+        DeathUI.SetActive(false);
     }
 
     private void Update()
@@ -23,7 +25,10 @@ public class PauseMenu : MonoBehaviour
         {
             PauseGame();
         }
-        Debug.Log("1");
+        if (PlayerController.playerDead())
+        {
+            Invoke("GameOverDisplay", 2f);
+        }
     }
 
     void PauseGame()
@@ -59,5 +64,22 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         SceneManager.LoadScene("Title Screen");
+    }
+
+    public void EndGame()
+    {
+        Application.Quit();
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    
+    public void GameOverDisplay()
+    {
+        DeathUI.SetActive(true);
+        GameUI.SetActive(false);
+        PauseUI.SetActive(false);
     }
 }

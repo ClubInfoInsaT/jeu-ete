@@ -7,13 +7,14 @@ public class CameraMove : MonoBehaviour
 {
     public Transform cameraPos;
     public float speed;
-    public static float countDown = 5; 
+    public static float countDown;
     public TMP_Text text;
 
 
     private void Start()
     {
         text.enabled = true;
+        countDown = 5;
     }
 
     // Update is called once per frame
