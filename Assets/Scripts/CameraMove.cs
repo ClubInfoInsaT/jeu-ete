@@ -28,6 +28,7 @@ public class CameraMove : MonoBehaviour
             return;
         }else
         {
+            text.text = "";
             text.enabled = false;
         }
         

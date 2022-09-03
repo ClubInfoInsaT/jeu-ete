@@ -65,6 +65,6 @@ public class UIManager : MonoBehaviour
     }
     public void Launch()
     {
-        SceneManager.LoadScene("Generation");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 }
