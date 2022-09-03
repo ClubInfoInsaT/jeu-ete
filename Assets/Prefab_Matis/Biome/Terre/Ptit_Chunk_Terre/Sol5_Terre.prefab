@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 8461332544787471177}
   - component: {fileID: 7068697262489294696}
   - component: {fileID: 6069406163269429059}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sol5_Terre
   m_TagString: Untagged
   m_Icon: {fileID: 0}
