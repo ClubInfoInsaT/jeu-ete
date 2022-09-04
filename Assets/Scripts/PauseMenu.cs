@@ -16,6 +16,7 @@ public class PauseMenu : MonoBehaviour
         GameUI.SetActive(true);
         PauseUI.SetActive(false);
         DeathUI.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     private void Update()
