@@ -9,6 +9,10 @@ public class ScoreManager : MonoBehaviour
     public static int score=0;
     private float lastTime=0f;
 
+    private void Start()
+    {
+        score = 0;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -24,7 +28,7 @@ public class ScoreManager : MonoBehaviour
         if (Time.time -  lastTime >= 10f && Time.time >1f && !PlayerController.playerDead())
         {
             lastTime = Time.time;
-            score += 10;
+            score++;
         }
         text.text = score.ToString();
     }
