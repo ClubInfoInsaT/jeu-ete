@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("Jump", false);
             source.Stop();
         }
-        if (isGrounded && Input.GetButton("Jump"))
+        if (isGrounded && Input.GetButtonDown("Jump"))
         {
             if(Time.time - lastJump > jumpCooldown)
             {
