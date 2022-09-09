@@ -9,6 +9,7 @@ TagManager:
   - Platform
   - Wall
   - Spike
+  - Sticky
   layers:
   - Default
   - TransparentFX

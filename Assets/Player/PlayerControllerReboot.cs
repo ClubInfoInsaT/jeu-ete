@@ -18,7 +18,7 @@ public class PlayerControllerReboot : MonoBehaviour
     [Tooltip("Liste de sons jouable par le joueur (exemple : Saut)")] public AudioClip[] cliplist;
     [Tooltip("Source d'émission audio")] public AudioSource source;
     [Tooltip("Camera attachée au joueur")] public Camera Cam;
-    private Transform Camera;
+    private Transform CameraHolder;
     public Transform spikes;
     private bool wallCollide;
 
@@ -58,7 +58,7 @@ public class PlayerControllerReboot : MonoBehaviour
         moveSpeed = defaultSpeed;
         isGrounded = false;
         isDead = false;
-        Camera = Cam.gameObject.transform;
+        CameraHolder = Cam.gameObject.transform;
         lastJump = Time.time;
         source.volume = 0.5f;
     }
@@ -80,7 +80,7 @@ public class PlayerControllerReboot : MonoBehaviour
     {
         if (CameraMove.countDown > 0)
         {
-            //return;
+            return;
         }
         if (!isDead)
         {
@@ -186,21 +186,21 @@ public class PlayerControllerReboot : MonoBehaviour
             
             if(Cam.WorldToScreenPoint(rb2D.position).x < 0f)
             {
-                Camera.localPosition = Vector3.zero;
+                CameraHolder.localPosition = Vector3.zero;
                 wallCheck = null;
                 isDead=true;
                 Death();
             }
             else
             {
-                Camera.Translate(Vector2.right * moveSpeed * Time.deltaTime); 
+                CameraHolder.Translate(Vector2.right * moveSpeed * Time.deltaTime); 
             }
         }
         else
         {
             if (!isDead)
             {
-                Camera.localPosition = Vector3.zero;
+                CameraHolder.localPosition = Vector3.zero;
             }
             
         }

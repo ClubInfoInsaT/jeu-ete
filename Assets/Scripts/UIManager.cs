@@ -65,6 +65,7 @@ public class UIManager : MonoBehaviour
     }
     public void Launch()
     {
+        Debug.Log(SceneManager.GetActiveScene().buildIndex);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex+1);
     }
 }

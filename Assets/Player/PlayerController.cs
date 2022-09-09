@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 // Nouvelle version du Platform Character Controller de Gwen
 
 public class PlayerController : MonoBehaviour
-{
-    private enum clips {Jump};
+{ 
+    enum groundState { Normal, Slime}
     [Header("Main Components")]
     [Tooltip("Position de départ du personnage")] public Transform spawn;
     [Tooltip("Corps du personnage responsable des forces et mouvements")] public Rigidbody2D rb2D;
@@ -30,16 +31,20 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Hauteur du saut")][Min(20)]public float jumpForce;
     [Tooltip("Temps d'attente entre 2 sauts")]public float jumpCooldown;
     [Tooltip("Multiplieur réducteur pour ralentir la vitesse pendant le saut et la distance par la même occasion")][Range(0,1f)] public float jumpMultiplier;
+    private float defaultJump; 
     private float lastJump;
     private bool isGrounded;
     private Collider2D groundCollider;
+    private groundState gdState;
 
     [Header("Death Variables")]
     [Tooltip("Hauteur du saut lors de l'animation de mort")][Min(15)] public float jumpHeight;
     private static bool isDead = false;
 
     [Header("Animation Variables")]
-    public Animator anim; 
+    public Animator anim;
+    public ParticleSystem slimeJump,dirtJump;
+
 
     // [Header("Wall Sliding and Jumping variables")]
 
@@ -53,8 +58,10 @@ public class PlayerController : MonoBehaviour
         }
         moveSpeed = defaultSpeed;
         isGrounded = false;
+        defaultJump = jumpForce;
         isDead = false;
         lastJump = Time.time;
+        slimeJump.Stop();
         source.volume = 0.5f;
     }
 
@@ -128,10 +135,21 @@ public class PlayerController : MonoBehaviour
             anim.SetBool("Jump", false);
             source.Stop();
         }
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (isGrounded && Input.GetButton("Jump"))
         {
             if(Time.time - lastJump > jumpCooldown)
             {
+                switch (gdState)
+                {
+                    case groundState.Slime:
+                        slimeJump.Play();
+                        break;
+                    default:
+                        dirtJump.Play();
+                        break;
+                }
+              
+
                 lastJump = Time.time;   
                 rb2D.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
                 isGrounded = false;
@@ -166,9 +184,14 @@ public class PlayerController : MonoBehaviour
         Death(); 
     }
 
+    [Header("Sticky block manager")]
+    public float slowRate;
+    public float jumpReduction;
     void SlimyManager()
     {
-        return;
+        gdState = groundState.Slime;
+        moveSpeed = defaultSpeed * slowRate;
+        jumpForce = defaultJump * jumpReduction;
     }
 
     void Death()
@@ -185,6 +208,14 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Spike"))
         {
             SpikeManager();
+        }else if (collision.gameObject.CompareTag("Sticky"))
+        {
+            SlimyManager();
+        }
+        else
+        {
+            gdState = groundState.Normal;
+            jumpForce = defaultJump;
         }
     }
 
