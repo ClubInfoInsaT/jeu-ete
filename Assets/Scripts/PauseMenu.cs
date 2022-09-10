@@ -26,7 +26,7 @@ public class PauseMenu : MonoBehaviour
         {
             PauseGame();
         }
-        if (PlayerController.playerDead())
+        if (PlayerController.playerDead() || DinoController.playerDead())
         {
             Invoke("GameOverDisplay", 1f);
         }

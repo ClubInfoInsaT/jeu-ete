@@ -19,7 +19,7 @@ public class DinoController : MonoBehaviour
     public Transform wallCheck,groundCheck;
     public LayerMask wallMask, groundMask;
     private bool wallCollide,isGrounded;
-    private bool isDead;
+    private static bool isDead;
     public Transform CamResetTransform,CamDeathTransform;
     public float jumpHeight;
     public Collider2D bodyCollider;
@@ -153,10 +153,15 @@ public class DinoController : MonoBehaviour
         isDead = true; 
         anim.SetBool("Jump", false);
         anim.SetBool("isDead", true);
+        anim.CrossFade("Death", 0f, 0);
         player.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
         
     }
-    
-    
+    public static bool playerDead()
+    {
+        return isDead;
+    }
+
+
 
 }
