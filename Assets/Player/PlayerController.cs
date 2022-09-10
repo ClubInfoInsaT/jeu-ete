@@ -196,11 +196,11 @@ public class PlayerController : MonoBehaviour
 
     void Death()
     {
+        anim.SetBool("Jump", false);
         bodyCollider.enabled = false;
-        rb2D.gravityScale *= 0.5f;
         rb2D.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
         isDead = true;
-        anim.SetBool("isDead", true);
+        anim.CrossFade("Death", 0f,0);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

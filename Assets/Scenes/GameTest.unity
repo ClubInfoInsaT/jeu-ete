@@ -10733,7 +10733,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.25490198, g: 0.69803923, b: 0.8901961, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -10790,7 +10790,7 @@ MonoBehaviour:
   CameraHolder: {fileID: 5186504915938849334}
   Cam: {fileID: 5186504914668775798}
   moveSpeed: 2
-  jumpForce: 30
+  jumpForce: 25
   anim: {fileID: 5401545093602831290}
   wallCheck: {fileID: 5401545094141188975}
   groundCheck: {fileID: 5401545092095917097}
@@ -10806,7 +10806,7 @@ MonoBehaviour:
   bodyCollider: {fileID: 5401545093602831295}
   sprintMultiplier: 1.75
   crouchMultiplier: 0.75
-  jumpMultiplier: 2
+  jumpMultiplier: 2.2
   spawn: {fileID: 1435966388}
 --- !u!4 &5186504915938849334
 Transform:

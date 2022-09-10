@@ -27,6 +27,7 @@ public class DinoController : MonoBehaviour
     public float crouchMultiplier;
     public float jumpMultiplier;
     public Transform spawn;
+    private bool isSpiked; 
 
 
 
@@ -54,14 +55,17 @@ public class DinoController : MonoBehaviour
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
-        wallCollide = wallCheck == null ? false : Physics2D.OverlapBox(wallCheck.position, new Vector2(0.09f, 0.5f), 0f, wallMask);
+        wallCollide = wallCheck == null ? false : Physics2D.OverlapBox(wallCheck.position, new Vector2(0.09f, 0.6f), 0f, wallMask);
+        isSpiked = Physics2D.OverlapBox(groundCheck.position, new Vector2(0.3f, 0.03f), 0f, groundMask) != null ? Physics2D.OverlapBox(groundCheck.position, new Vector2(0.3f, 0.03f), 0f, groundMask).CompareTag("Spike"):false;
+        
         if (CameraMove.countDown > 0)
         {
             return;
         }
         if (isDead)
         {
-            return; 
+            //anim.CrossFade("Death", 0f, 0);
+            return;
         }
         Speed();
         MoveCam();
@@ -79,7 +83,7 @@ public class DinoController : MonoBehaviour
         else
         {
             Cam.gameObject.transform.Translate(Vector2.right * moveSpeed * Time.deltaTime);
-            
+ 
         }
     }
     void Speed()
@@ -107,10 +111,15 @@ public class DinoController : MonoBehaviour
     }
     void DeathManager()
     {
-        if (Cam.WorldToScreenPoint(player.position).x < 0f)
+        if (isSpiked)
+        {
+            SpikeManager();
+        }
+        if (Cam.WorldToScreenPoint(player.position).x < 0f || Cam.WorldToScreenPoint(player.position).y < 0f)
         {
             isDead = true;
             Cam.gameObject.transform.position = new Vector3(CamResetTransform.position.x, Cam.gameObject.transform.position.y, Cam.gameObject.transform.position.z);
+            player.position = new Vector2(player.position.x,Cam.WorldToScreenPoint(player.position).y);   
             Death();
         }
     }
@@ -141,17 +150,13 @@ public class DinoController : MonoBehaviour
     void Death()
     {
         bodyCollider.enabled = false;
-
-        player.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
-        isDead = true;
+        isDead = true; 
+        anim.SetBool("Jump", false);
         anim.SetBool("isDead", true);
+        player.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
+        
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Spike"))
-        {
-            SpikeManager();
-        }
-    }
+    
+    
 
 }
