@@ -633,6 +633,7 @@ GameObject:
   m_Component:
   - component: {fileID: 915514106160211912}
   - component: {fileID: 5066727306591121539}
+  - component: {fileID: -2910495435715555622}
   m_Layer: 0
   m_Name: Tour_Jump_terre
   m_TagString: Untagged
@@ -669,6 +670,19 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!114 &-2910495435715555622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6525060686188691554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc97bbd68418511ceb243dde487aec84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constraints: []
 --- !u!1001 &7448392159947516583
 PrefabInstance:
   m_ObjectHideFlags: 0

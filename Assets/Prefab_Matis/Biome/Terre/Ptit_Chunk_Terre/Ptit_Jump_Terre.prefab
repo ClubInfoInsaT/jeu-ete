@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7039597635441453508}
   - component: {fileID: 8077671380474621113}
+  - component: {fileID: -755370838344269404}
   m_Layer: 0
   m_Name: Ptit_Jump_Terre
   m_TagString: Untagged
@@ -45,6 +46,19 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!114 &-755370838344269404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3661775478453266296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc97bbd68418511ceb243dde487aec84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constraints: []
 --- !u!1 &4598153138496874835
 GameObject:
   m_ObjectHideFlags: 0

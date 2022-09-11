@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5960634878471392574}
+  - component: {fileID: -3832202345049767765}
   m_Layer: 0
   m_Name: Double_Escalier
   m_TagString: Untagged
@@ -32,6 +33,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-3832202345049767765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4601729167427527566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc97bbd68418511ceb243dde487aec84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  constraints:
+  - chunk: {fileID: 3661775478453266296, guid: eb2cb193b28539f428ce511a1d29700d, type: 3}
+    constraintCoefficient: 0
 --- !u!1001 &2145623188396007598
 PrefabInstance:
   m_ObjectHideFlags: 0
