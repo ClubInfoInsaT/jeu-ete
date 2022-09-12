@@ -7,14 +7,15 @@ public class CameraMove : MonoBehaviour
 {
     public Transform cameraPos;
     public float speed;
-    public static float countDown;
+    public static  float countDown = 5;
     public TMP_Text text;
-
+    private float defaultValue;
 
     private void Start()
     {
         text.enabled = true;
-        countDown = 5;
+        defaultValue = countDown;
+        
     }
 
     // Update is called once per frame
@@ -35,7 +36,7 @@ public class CameraMove : MonoBehaviour
         if (!PlayerController.playerDead())
         {
             cameraPos.Translate(speed * Time.deltaTime * Vector2.right);
-        }       
-
+        }
     }
+
 }

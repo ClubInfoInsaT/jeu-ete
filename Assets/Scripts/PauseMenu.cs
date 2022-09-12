@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,9 +11,16 @@ public class PauseMenu : MonoBehaviour
     public GameObject PauseUI,GameUI,DeathUI;
     public GameObject[] UIs;
     public AudioSource source;
+    public UnityEvent PauseEvent,ResumeEvent;
 
     private void Start()
     {
+        if (PauseEvent == null)
+            PauseEvent = new UnityEvent();
+        PauseEvent.AddListener(PauseGame);
+        if (ResumeEvent == null)
+            ResumeEvent = new UnityEvent();
+        ResumeEvent.AddListener(TimerRestart);
         GameUI.SetActive(true);
         PauseUI.SetActive(false);
         DeathUI.SetActive(false);
@@ -24,7 +32,7 @@ public class PauseMenu : MonoBehaviour
         
         if (Input.GetKey(KeyCode.Escape))
         {
-            PauseGame();
+            PauseEvent.Invoke();
         }
         if (PlayerController.playerDead() || DinoController.playerDead())
         {
@@ -46,6 +54,7 @@ public class PauseMenu : MonoBehaviour
     }
     public void ResumeGame()
     {
+        ResumeEvent.Invoke();
         Time.timeScale = 1f;
         source.Play();
         GameUI.SetActive(true);
@@ -76,11 +85,15 @@ public class PauseMenu : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-    
+
     public void GameOverDisplay()
     {
         DeathUI.SetActive(true);
         GameUI.SetActive(false);
         PauseUI.SetActive(false);
+    }
+    void TimerRestart()
+    {
+        Debug.Log("Resume Game");
     }
 }
