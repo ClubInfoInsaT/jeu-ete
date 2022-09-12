@@ -11650,7 +11650,7 @@ MonoBehaviour:
   - {fileID: 6804466239667874875, guid: 54acf2781b906374a80bce0efa6e3eb0, type: 3}
   - {fileID: 6499416352717353681, guid: b40dc58777f89fb4d9549ee89c0a3655, type: 3}
   - {fileID: 1060322457385031139, guid: 144be1048f544a04aba23bb8446e9ac6, type: 3}
-  terrainWindowSize: 0
+  terrainWindowSize: 100
 --- !u!4 &7602180442581391306
 Transform:
   m_ObjectHideFlags: 0

@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour
         {
             gameObject.GetComponent<SpriteRenderer>().flipX = true;
         }
-        else
+        else if (horizontal > 0.01f)
         {
             gameObject.GetComponent<SpriteRenderer>().flipX = false;
         }
