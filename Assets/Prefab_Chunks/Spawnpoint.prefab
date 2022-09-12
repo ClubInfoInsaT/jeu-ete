@@ -44,12 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50afb006c4a4b03e4a6446be6c2de17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chunks:
-  - {fileID: 6525060686188691554, guid: a652d832d09321c499f93229de43b96e, type: 3}
-  - {fileID: 613024772575647774, guid: adfbb16625dbfee4296b34d852a928b7, type: 3}
-  - {fileID: 1999144778132981665, guid: 7f3132255a6993546b9d4fb7e2cba715, type: 3}
-  - {fileID: 7376737244907907891, guid: f7e6cc5077fd7c141a31c83b0b96f680, type: 3}
-  - {fileID: 6779725354913850464, guid: d14d8be3c4b79fc44aa860fa4e645a67, type: 3}
-  - {fileID: 3122563151503498919, guid: 8e53016c2c7aec14389ceeb311988f91, type: 3}
-  - {fileID: 8208247330293635112, guid: d91c41519b93dd6468029ea571e78fcb, type: 3}
+  chunks: []
   terrainWindowSize: 0
