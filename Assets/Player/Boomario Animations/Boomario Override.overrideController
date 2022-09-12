@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Boomario Override
+  m_Controller: {fileID: 9100000, guid: effb00a052159b446abfb8a19efcbf70, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 08a9fe2e6df54344682f616572d93c10, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8724dabff8a1fae46b50d5184b15aa73, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 390542fd24694f94d8781b32c96bd94e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: e2b1864a27766354da7842852fda8ca8, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 3313357a2659bc54a830d1c4f538dae2, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 33fe947d213539a49bfe35d4506730fd, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: e66b5ae468d8b6346bc52fc4a4a42e4f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: ec2a53121d841344a8388fae3076348b, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: abd3f06aaa1861442b851868fa9f577e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: fc327deb1d649aa48a1882f200580a82, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 5bdbe67af87b78f4a93a8939a336f5d1, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 33048fc64c051e242a0132c1da452300, type: 2}

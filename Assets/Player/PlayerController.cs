@@ -53,9 +53,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb2D = gameObject.GetComponent<Rigidbody2D>();
-        if(spawn != null){
-            rb2D.gameObject.transform.position = spawn.position;
-        }
         moveSpeed = defaultSpeed;
         isGrounded = false;
         defaultJump = jumpForce;
@@ -94,45 +91,49 @@ public class PlayerController : MonoBehaviour
 
     void Speed()
     {
-        if (vertical < -0.99f || Input.GetButton("Crouch")) 
+        if (!isGrounded)
+        {
+            moveSpeed = defaultSpeed *jumpMultiplier;
+            return;
+        }
+        if (vertical < -0.99f || Input.GetButton("Crouch"))
         {
             moveSpeed = defaultSpeed * crouchMultiplier;
-            Crouch();
+            anim.CrossFade("Crouch", 0f, 0);
         }
-        else if(Input.GetButton("Sprint"))
+        else if (horizontal < -.9f || horizontal > 0.1f)
         {
-            moveSpeed = defaultSpeed * sprintMultiplier;
-            anim.SetBool("isRunning", true);
+            if (Input.GetButton("Sprint"))
+            {
+                moveSpeed = defaultSpeed * sprintMultiplier;
+                anim.CrossFade("Sprint", 0f, 0);
+            }
+            else
+            {
+                anim.CrossFade("Walk", 0f, 0);
+                moveSpeed = defaultSpeed;
+            }
         }
         else
         {
-            moveSpeed = defaultSpeed;
-            anim.SetBool("isRunning", false);
-            anim.SetBool("isCrouching", false);
+            anim.CrossFade("Idle", 0f, 0);
         }
-        if (!isGrounded)
-        {
-            moveSpeed *= jumpMultiplier;
-        }
+        
     }
     void Moving()
     {
-        if(horizontal > 0.1f ||horizontal < -0.99f)
+        if (horizontal > 0.1f || horizontal < -0.99f)
         {
-            anim.SetBool("isWalking", true);
-            rb2D.AddForce(new Vector2(horizontal * moveSpeed,0f),ForceMode2D.Impulse);
-        }
-        else
-        {
-            anim.SetBool("isWalking", false);
+
+            rb2D.AddForce(new Vector2(horizontal * moveSpeed, 0f), ForceMode2D.Impulse);
         }
     }
     void Jumping()
     {
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(0.3f, 0.03f),0f, groundMask) ;
+        
         if (isGrounded)
         {
-            anim.SetBool("Jump", false);
             source.Stop();
         }
         if (isGrounded && Input.GetButton("Jump"))
@@ -153,17 +154,13 @@ public class PlayerController : MonoBehaviour
                 lastJump = Time.time;   
                 rb2D.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
                 isGrounded = false;
-                anim.SetBool("Jump", true);
+                anim.CrossFade("Jump", 0f, 0);
                 source.clip = cliplist[0];
                 source.Play();
                 
             }
             
         }
-    }
-    void Crouch()
-    {
-        anim.SetBool("isCrouching", true);
     }
 
     void Flip()
@@ -196,7 +193,6 @@ public class PlayerController : MonoBehaviour
 
     void Death()
     {
-        anim.SetBool("Jump", false);
         bodyCollider.enabled = false;
         rb2D.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
         isDead = true;
