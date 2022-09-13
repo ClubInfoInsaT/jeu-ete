@@ -53,6 +53,10 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb2D = gameObject.GetComponent<Rigidbody2D>();
+        if(spawn != null)
+        {
+            rb2D.position = spawn.position;
+        }
         moveSpeed = defaultSpeed;
         isGrounded = false;
         defaultJump = jumpForce;
@@ -67,7 +71,7 @@ public class PlayerController : MonoBehaviour
     {
         if(CameraMove.countDown > 0)
         {
-            //return;
+            return;
         }
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
@@ -78,7 +82,7 @@ public class PlayerController : MonoBehaviour
     {
         if (CameraMove.countDown > 0)
         {
-            //return;
+            return;
         }
         if (!isDead)
         {
