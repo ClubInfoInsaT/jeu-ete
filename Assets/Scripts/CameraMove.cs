@@ -10,11 +10,16 @@ public class CameraMove : MonoBehaviour
     public static  float countDown = 5;
     public TMP_Text text;
     private float defaultValue;
+    public float cdIncrease;
+    private float lastCameraCall ;
+    public float incrementValue;
+    public PlayerController player;
 
     private void Start()
     {
         text.enabled = true;
         defaultValue = countDown;
+        lastCameraCall = Time.time; 
         
     }
 
@@ -32,9 +37,18 @@ public class CameraMove : MonoBehaviour
             text.text = "";
             text.enabled = false;
         }
-        
-        if (!PlayerController.playerDead())
+        if ( Time.time >0 && Time.time - lastCameraCall> cdIncrease)
         {
+            lastCameraCall = Time.time;
+            speed += incrementValue;
+            if(player!= null)
+            {
+                player.increaseSpeed(incrementValue);
+            }
+            
+        }
+        if (!PlayerController.playerDead())
+        {     
             cameraPos.Translate(speed * Time.deltaTime * Vector2.right);
         }
     }

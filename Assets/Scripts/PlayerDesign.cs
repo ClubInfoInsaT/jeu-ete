@@ -11,6 +11,11 @@ public class PlayerDesign : MonoBehaviour
     private void Start()
     {
         int index = PlayerPrefs.GetInt("team");
+        if(index != 0 && index != 1)
+        {
+            index = (int)team.PKPeach;
+        }
+        
         if (SpawnPos != null)
             Instantiate(playerPrefab[index],SpawnPos);
         else

@@ -223,6 +223,9 @@ public class PlayerController : MonoBehaviour
     {
         return isDead;
     }
-
+    public void increaseSpeed(float value)
+    {
+        defaultSpeed += value;
+    }
 
 }
