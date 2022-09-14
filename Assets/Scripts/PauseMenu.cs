@@ -84,6 +84,12 @@ public class PauseMenu : MonoBehaviour
     public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        ScoreManager.ResetScore();
+        GameUI.SetActive(true);
+        PauseUI.SetActive(false);
+        DeathUI.SetActive(false);
+        PlayerController.Resurrect();
+        CameraMove.TimerRestart(5);
     }
 
     public void GameOverDisplay()
@@ -95,5 +101,6 @@ public class PauseMenu : MonoBehaviour
     void TimerRestart()
     {
         Debug.Log("Resume Game");
+
     }
 }

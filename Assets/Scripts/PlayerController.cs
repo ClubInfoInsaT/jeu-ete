@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 { 
-    enum groundState { Normal, Slime}
+    enum groundState {Normal, Slime}
     [Header("Main Components")]
     [Tooltip("Position de départ du personnage")] public Transform spawn;
     [Tooltip("Corps du personnage responsable des forces et mouvements")] public Rigidbody2D rb2D;
@@ -69,7 +69,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(CameraMove.countDown > 0)
+        if(CameraMove.CountDown())
+        {
+            return;
+        }
+        if (isDead)
         {
             return;
         }
@@ -80,7 +84,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (CameraMove.countDown > 0)
+        if (CameraMove.CountDown())
         {
             return;
         }
@@ -95,6 +99,7 @@ public class PlayerController : MonoBehaviour
 
     void Speed()
     {
+       
         if (!isGrounded)
         {
             moveSpeed = defaultSpeed *jumpMultiplier;
@@ -226,6 +231,11 @@ public class PlayerController : MonoBehaviour
     public void increaseSpeed(float value)
     {
         defaultSpeed += value;
+    }
+
+    public static void Resurrect()
+    {
+        isDead = false;
     }
 
 }

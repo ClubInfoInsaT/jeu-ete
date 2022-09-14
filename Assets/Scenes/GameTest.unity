@@ -1043,7 +1043,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915415832}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.55, y: -2, z: 150}
+  m_LocalPosition: {x: -5.55, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1190,7 +1190,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 1
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -1572,6 +1572,10 @@ PrefabInstance:
       propertyPath: spawn
       value: 
       objectReference: {fileID: 1435966388}
+    - target: {fileID: 3426444401810311528, guid: aa9000832a9b1f34e9899b496b083090, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa9000832a9b1f34e9899b496b083090, type: 3}
 --- !u!1 &1727459535
@@ -2317,8 +2321,8 @@ MonoBehaviour:
   cameraPos: {fileID: 3801287461960122077}
   speed: 1.5
   text: {fileID: 329106918}
-  cdIncrease: 0
-  incrementValue: 0
+  cdIncrease: 10
+  incrementValue: 0.2
   player: {fileID: 0}
 --- !u!4 &3801287461960122077
 Transform:
@@ -5660,7 +5664,7 @@ MonoBehaviour:
   - {fileID: 6804466239667874875, guid: 54acf2781b906374a80bce0efa6e3eb0, type: 3}
   - {fileID: 6499416352717353681, guid: b40dc58777f89fb4d9549ee89c0a3655, type: 3}
   - {fileID: 1060322457385031139, guid: 144be1048f544a04aba23bb8446e9ac6, type: 3}
-  terrainWindowSize: 100
+  terrainWindowSize: 1000
 --- !u!4 &7602180442581391306
 Transform:
   m_ObjectHideFlags: 0

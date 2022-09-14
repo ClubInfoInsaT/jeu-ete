@@ -9,7 +9,8 @@ public class CameraMove : MonoBehaviour
     public float speed;
     public static  float countDown = 5;
     public TMP_Text text;
-    private float defaultValue;
+    public static float defaultValue;
+    private static float loadTime; 
     public float cdIncrease;
     private float lastCameraCall ;
     public float incrementValue;
@@ -19,10 +20,16 @@ public class CameraMove : MonoBehaviour
     {
         text.enabled = true;
         defaultValue = countDown;
-        lastCameraCall = Time.time; 
-        
+        lastCameraCall = Time.time;
+        TimerRestart(5f); 
     }
+    public static void TimerRestart(float resetValue)
+    {
+        //Remettre le timer à 0 
+        loadTime = Time.timeSinceLevelLoad;
+        countDown = resetValue;
 
+    }
     // Update is called once per frame
     void Update()
     {
@@ -31,7 +38,7 @@ public class CameraMove : MonoBehaviour
             countDown -= Time.deltaTime;
             text.enabled = true;
             text.text = ((int)countDown+1).ToString();
-            return;
+            return; 
         }else
         {
             text.text = "";
@@ -51,6 +58,10 @@ public class CameraMove : MonoBehaviour
         {     
             cameraPos.Translate(speed * Time.deltaTime * Vector2.right);
         }
+    }
+    public static bool CountDown()
+    {
+        return countDown > 0f;
     }
 
 }

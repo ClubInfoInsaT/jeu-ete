@@ -16,7 +16,7 @@ public class ScoreManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(CameraMove.countDown > 0)
+        if(CameraMove.CountDown())
         {
             lastTime = Time.time;
             text.enabled  = false;
@@ -32,5 +32,9 @@ public class ScoreManager : MonoBehaviour
         }
         text.text = score.ToString();
     }
-    
+    public static void ResetScore()
+    {
+        score = 0;
+    }
+
 }
