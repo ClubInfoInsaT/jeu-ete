@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Layer à utiliser pour identifier le sol")] public LayerMask groundMask;
     [Tooltip("Position du vérificateur de mur nécessaire au wall jump")] public Transform wallCheck;
     [Tooltip("Layer a utiliser pour identifier un mur")] public LayerMask wallMask;
-    [Tooltip("Liste de sons jouable par le joueur (exemple : Saut)")] public AudioClip[] cliplist;
+    [Tooltip("Liste de sons jouable par le joueur (exemple : Saut,Mort)")] public AudioClip[] cliplist;
     [Tooltip("Source d'émission audio")] public AudioSource source; 
 
     [Header("Move Variables")]
@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
         {
             source.Stop();
         }
-        if (isGrounded && Input.GetButton("Jump"))
+        if (isGrounded && (Input.GetButton("Jump") || vertical > 0.1f))
         {
             if(Time.time - lastJump > jumpCooldown)
             {
@@ -204,6 +204,8 @@ public class PlayerController : MonoBehaviour
     {
         bodyCollider.enabled = false;
         rb2D.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
+        source.clip = cliplist[1];
+        source.Play();
         isDead = true;
         anim.CrossFade("Death", 0f,0);
     }

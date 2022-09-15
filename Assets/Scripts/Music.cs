@@ -10,7 +10,7 @@ public class Music : MonoBehaviour
     public bool SkipIntro; 
     private AudioSource audioSource;
 
-    private bool pause = false; 
+    public static bool pause = false; 
     // Start is called before the first frame update
     IEnumerator Start()
     {
@@ -25,6 +25,7 @@ public class Music : MonoBehaviour
             
             //Subscribing to Pause / Unpause Events
             //...
+            // Note de Gwen, j'ai fait quelques modifs pour la musique notament la pause du jeu et les clips qui ne doivent être joués que si la vitese est au max 
         }
 
     }
@@ -32,6 +33,11 @@ public class Music : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (PlayerController.playerDead())
+        {
+            audioSource.Pause();
+            return;
+        }
         if (pause)
         { 
             if (audioSource.isPlaying)
@@ -41,8 +47,10 @@ public class Music : MonoBehaviour
         {
             if (!audioSource.isPlaying)
             {
-                audioSource.clip = LoopClips[Random.Range(0, LoopClips.Length)];
-                Debug.Log("Now Playing : " + audioSource.clip.name);
+                if (CameraMove.isMaxed()) {
+                    audioSource.clip = LoopClips[Random.Range(0, LoopClips.Length)];
+                    Debug.Log("Now Playing : " + audioSource.clip.name);
+                }
                 audioSource.Play();
             }
         }

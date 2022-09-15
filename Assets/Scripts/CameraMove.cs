@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class CameraMove : MonoBehaviour
 {
     public Transform cameraPos;
     public float speed;
-    public static  float countDown = 5;
+    public static  float countDown = 3;
     public TMP_Text text;
     public static float defaultValue;
     private static float loadTime; 
@@ -15,13 +16,14 @@ public class CameraMove : MonoBehaviour
     private float lastCameraCall ;
     public float incrementValue;
     public PlayerController player;
-
+    public float speedCap;
+    private static bool maxSpeed;
     private void Start()
     {
         text.enabled = true;
         defaultValue = countDown;
         lastCameraCall = Time.time;
-        TimerRestart(5f); 
+        TimerRestart(3f);
     }
     public static void TimerRestart(float resetValue)
     {
@@ -46,6 +48,11 @@ public class CameraMove : MonoBehaviour
         }
         if ( Time.time >0 && Time.time - lastCameraCall> cdIncrease)
         {
+            if(speed > speedCap - incrementValue)
+            {
+                maxSpeed = true;
+                return;
+            }
             lastCameraCall = Time.time;
             speed += incrementValue;
             if(player!= null)
@@ -63,5 +70,12 @@ public class CameraMove : MonoBehaviour
     {
         return countDown > 0f;
     }
+
+    public static bool isMaxed()
+    {
+        return maxSpeed == true;
+    }
+
+
 
 }

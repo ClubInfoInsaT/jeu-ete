@@ -11,7 +11,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject PauseUI,GameUI,DeathUI;
     public GameObject[] UIs;
     public AudioSource source;
-    public UnityEvent PauseEvent,ResumeEvent;
+    public static UnityEvent PauseEvent,ResumeEvent;
+    private bool gameState = false; //false = pause true= ingame
 
     private void Start()
     {
@@ -20,7 +21,7 @@ public class PauseMenu : MonoBehaviour
         PauseEvent.AddListener(PauseGame);
         if (ResumeEvent == null)
             ResumeEvent = new UnityEvent();
-        ResumeEvent.AddListener(TimerRestart);
+        ResumeEvent.AddListener(ResumeGame);
         GameUI.SetActive(true);
         PauseUI.SetActive(false);
         DeathUI.SetActive(false);
@@ -30,10 +31,19 @@ public class PauseMenu : MonoBehaviour
     private void Update()
     {
         
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) )
         {
-            PauseEvent.Invoke();
+            if (gameState)
+            {
+                ResumeEvent.Invoke();
+            }
+            else
+            {
+                PauseEvent.Invoke();
+            }
+            
         }
+
         if (PlayerController.playerDead() || DinoController.playerDead())
         {
             Invoke("GameOverDisplay", 1f);
@@ -42,8 +52,10 @@ public class PauseMenu : MonoBehaviour
 
     void PauseGame()
     {
+        gameState = true;
         Time.timeScale = 0f;
         source.Pause();
+        Music.pause = true;
         GameUI.SetActive(false);
         PauseUI.SetActive(true);
         for(int i = 0; i < UIs.Length; i++)
@@ -54,7 +66,8 @@ public class PauseMenu : MonoBehaviour
     }
     public void ResumeGame()
     {
-        ResumeEvent.Invoke();
+        gameState = false; 
+        Music.pause = false;
         Time.timeScale = 1f;
         source.Play();
         GameUI.SetActive(true);
@@ -104,3 +117,4 @@ public class PauseMenu : MonoBehaviour
 
     }
 }
+    
