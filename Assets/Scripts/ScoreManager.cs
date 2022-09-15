@@ -8,7 +8,7 @@ public class ScoreManager : MonoBehaviour
     public TMP_Text text;
     public static int score=0;
     private float lastTime=0f;
-
+    public float cdScore;
     private void Start()
     {
         score = 0;
@@ -25,7 +25,7 @@ public class ScoreManager : MonoBehaviour
         {
             text.enabled = true;
         }
-        if (Time.time -  lastTime >= 10f && Time.time >1f && !PlayerController.playerDead())
+        if (Time.time -  lastTime >= cdScore && Time.time >1f && !PlayerController.playerDead())
         {
             lastTime = Time.time;
             score++;

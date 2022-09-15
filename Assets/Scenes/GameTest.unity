@@ -174,7 +174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &60736730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2885,7 +2885,7 @@ MonoBehaviour:
   speed: 1.5
   text: {fileID: 329106918}
   cdIncrease: 5
-  incrementValue: 0.2
+  incrementValue: 0.1
   player: {fileID: 0}
   speedCap: 10
 --- !u!4 &3801287461960122077
@@ -4144,7 +4144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &3965184900997151723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6155,7 +6155,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &4769437962415346825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6169,6 +6169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 856317986501221379}
+  cdScore: 0.5
 --- !u!1 &5448650041191682888
 GameObject:
   m_ObjectHideFlags: 0
