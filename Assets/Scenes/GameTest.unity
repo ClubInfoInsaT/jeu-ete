@@ -2885,7 +2885,7 @@ MonoBehaviour:
   speed: 1.5
   text: {fileID: 329106918}
   cdIncrease: 5
-  incrementValue: 0.1
+  incrementValue: 0.15
   player: {fileID: 0}
   speedCap: 10
 --- !u!4 &3801287461960122077
@@ -2918,7 +2918,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0

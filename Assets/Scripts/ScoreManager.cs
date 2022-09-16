@@ -28,7 +28,7 @@ public class ScoreManager : MonoBehaviour
         if (Time.time -  lastTime >= cdScore && Time.time >1f && !PlayerController.playerDead())
         {
             lastTime = Time.time;
-            score++;
+            score += 100;
         }
         text.text = score.ToString();
     }
