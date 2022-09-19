@@ -18,6 +18,8 @@ public class Generation : MonoBehaviour
 	private Dictionary<GameObject,List<KeyValuePair<GameObject,float>>> adjacencyMatrix = new();
 
 	public List<GameObject> chunks = new();
+	[Header("Chunks d'intro pour apprendre à jouer\n(par exemple un terrain plat)")] 
+	public List<GameObject> tutorialChunks = new();
 	public int terrainWindowSize; 
  
 	//[SerializeField]
@@ -83,29 +85,35 @@ public class Generation : MonoBehaviour
 			}
 			adjacencyMatrix.Add(chunkX,adjacencyVector);
 		}
+		
 		//Generating initial chunks
-		newChunk = chunks[Random.Range(0, chunks.Count)];
-		for (int i = 0; i < terrainWindowSize; i++)
+		foreach (GameObject chunk in tutorialChunks)
 		{
-			Invoke("SpawnChunk", 0.1f);
+			SpawnChunk(chunk);
+		}
+		newChunk = chunks[Random.Range(0, chunks.Count)];
+		for (int i = 0; i < terrainWindowSize-tutorialChunks.Count; i++)
+		{
+			Invoke("SpawnRandomChunk", 0.1f);
 		}
 	}
 
-	// Instantiate a new chunk to replace the useless one
-	public void SpawnChunk() 
+	// Instantiate a new random chunk to replace the useless one
+	public void SpawnRandomChunk() 
 	{
 		float randomFloat = Random.Range(0f, 1f);
 		// Iterating over the current chunk's probability vector (with accumulation of each predecessor)
 		// The first correct threshold gives us the new chunk
-		string vec = "   ";
-		foreach (KeyValuePair<GameObject,float> pair in adjacencyMatrix[newChunk])
-		{
-			vec += pair.Value+"   "; 
-		}
-		int newChunkIndex = adjacencyMatrix[newChunk].FindIndex(pair => randomFloat <= pair.Value); 
-		Debug.Log("new index: "+ newChunkIndex);
+		
+		int newChunkIndex = adjacencyMatrix[newChunk].FindIndex(pair => randomFloat <= pair.Value);
 		newChunk = adjacencyMatrix[newChunk][newChunkIndex].Key;
+		SpawnChunk(newChunk);
+		
+	}
 
+	// Instantiate a new chunk to replace the useless one
+	private void SpawnChunk(GameObject newChunk)
+	{
 		// chunk instance position is next to the previous one (or 0 if first)
 		float newPos = terrain[(currentChunkIndex + terrainWindowSize - 1) % terrainWindowSize] == null ? 
 			0 : ( terrain[ (currentChunkIndex + terrainWindowSize - 1) % terrainWindowSize ].transform.position.x 
@@ -120,6 +128,7 @@ public class Generation : MonoBehaviour
 		
 		//updating chunk index in the terrain window
 		currentChunkIndex = (currentChunkIndex + 1) % terrainWindowSize; 
-		
+
 	}
+	
 }
