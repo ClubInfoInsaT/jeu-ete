@@ -1,21 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Music : MonoBehaviour
 {
-
+    public Slider sliderSon;
     public AudioClip CrescendoClip;
     public AudioClip[] LoopClips;
     public bool SkipIntro; 
     private AudioSource audioSource;
+    public float maxVolume;
 
     public static bool pause = false; 
     // Start is called before the first frame update
     IEnumerator Start()
     {
         audioSource = transform.GetComponent<AudioSource>();
-
+        if(sliderSon == null)
+        {
+            throw new System.Exception("Slider non défini");
+        }
+        sliderSon.maxValue = maxVolume;
+        sliderSon.value = sliderSon.maxValue;
         if (!SkipIntro)
         {
             audioSource.clip = CrescendoClip;
@@ -39,7 +46,8 @@ public class Music : MonoBehaviour
             return;
         }
         if (pause)
-        { 
+        {
+            setVolume();
             if (audioSource.isPlaying)
                 audioSource.Pause();
         }
@@ -55,6 +63,9 @@ public class Music : MonoBehaviour
             }
         }
     }
+
+    
+    void setVolume(){audioSource.volume = sliderSon.value;}
 
     
 }
