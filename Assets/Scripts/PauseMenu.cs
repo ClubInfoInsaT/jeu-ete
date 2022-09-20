@@ -56,6 +56,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         source.Pause();
         Music.pause = true;
+        CameraMove.genEnabled = false;
         GameUI.SetActive(false);
         PauseUI.SetActive(true);
         for(int i = 0; i < UIs.Length; i++)
@@ -72,6 +73,7 @@ public class PauseMenu : MonoBehaviour
         source.Play();
         GameUI.SetActive(true);
         PauseUI.SetActive(false);  
+        CameraMove.genEnabled = true;
     }
     public void DisplayControl()
     {

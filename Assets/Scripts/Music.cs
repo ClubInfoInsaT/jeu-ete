@@ -10,6 +10,7 @@ public class Music : MonoBehaviour
     public AudioClip[] LoopClips;
     public bool SkipIntro; 
     private AudioSource audioSource;
+    public AudioSource playerSource;
     public float maxVolume;
 
     public static bool pause = false; 
@@ -50,6 +51,7 @@ public class Music : MonoBehaviour
             setVolume();
             if (audioSource.isPlaying)
                 audioSource.Pause();
+
         }
         else
         {
@@ -65,7 +67,7 @@ public class Music : MonoBehaviour
     }
 
     
-    void setVolume(){audioSource.volume = sliderSon.value;}
+    void setVolume(){audioSource.volume = sliderSon.value; PlayerController.source.volume = sliderSon.value; }
 
     
 }

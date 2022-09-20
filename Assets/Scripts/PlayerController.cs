@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Position du vérificateur de mur nécessaire au wall jump")] public Transform wallCheck;
     [Tooltip("Layer a utiliser pour identifier un mur")] public LayerMask wallMask;
     [Tooltip("Liste de sons jouable par le joueur (exemple : Saut,Mort)")] public AudioClip[] cliplist;
-    [Tooltip("Source d'émission audio")] public AudioSource source; 
+    [Tooltip("Source d'émission audio")] public static  AudioSource source; 
 
     [Header("Move Variables")]
     [Tooltip("Vitesse de marche")] public float defaultSpeed;
@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
         isDead = false;
         lastJump = Time.time;
         slimeJump.Stop();
+        source = gameObject.GetComponent<AudioSource>();
         source.volume = 0.5f;
     }
 

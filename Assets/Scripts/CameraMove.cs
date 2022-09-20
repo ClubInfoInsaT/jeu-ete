@@ -18,12 +18,15 @@ public class CameraMove : MonoBehaviour
     public PlayerController player;
     public float speedCap;
     private static bool maxSpeed;
+    public Generation generationScript;
+    public static bool genEnabled= false;
     private void Start()
     {
         text.enabled = true;
         defaultValue = countDown;
         lastCameraCall = Time.time;
         TimerRestart(3f);
+        genEnabled = true;
     }
     public static void TimerRestart(float resetValue)
     {
@@ -46,6 +49,13 @@ public class CameraMove : MonoBehaviour
             text.text = "";
             text.enabled = false;
         }
+        
+        if (genEnabled)
+        {
+            StartCoroutine(Periodic_Generator());
+            genEnabled = false;
+        }
+        
         if ( Time.time >0 && Time.time - lastCameraCall> cdIncrease)
         {
             if(speed > speedCap - incrementValue)
@@ -62,7 +72,8 @@ public class CameraMove : MonoBehaviour
             
         }
         if (!PlayerController.playerDead())
-        {     
+        {
+            
             cameraPos.Translate(speed * Time.deltaTime * Vector2.right);
         }
     }
@@ -76,6 +87,19 @@ public class CameraMove : MonoBehaviour
         return maxSpeed == true;
     }
 
+    IEnumerator Periodic_Generator()
+    {   
+        Debug.Log("Update chunk window"+Time.time.ToString()); // Suppression et spawn de chunks (Voir methode de Valentin)
+         
+        if (PlayerController.playerDead())
+        {
+            yield break;
+        }
 
+        yield return new WaitForSeconds(10f);
+        generationScript.SpawnRandomChunk();
+        genEnabled = true;
+
+    }
 
 }

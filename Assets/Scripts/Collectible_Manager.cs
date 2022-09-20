@@ -17,7 +17,7 @@ public class Collectible_Manager : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            ScoreManager.score++;
+            ScoreManager.score+=100;
             Destroy(gameObject);
         }
     }
