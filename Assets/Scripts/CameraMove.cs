@@ -20,6 +20,7 @@ public class CameraMove : MonoBehaviour
     private static bool maxSpeed;
     public Generation generationScript;
     public static bool genEnabled= false;
+    public float generationDelay = 10f;
     private void Start()
     {
         text.enabled = true;
@@ -54,6 +55,11 @@ public class CameraMove : MonoBehaviour
         {
             StartCoroutine(Periodic_Generator());
             genEnabled = false;
+        }
+        if (Music.pause)
+        {
+            StopAllCoroutines();
+            genEnabled = true;
         }
         
         if ( Time.time >0 && Time.time - lastCameraCall> cdIncrease)
@@ -96,7 +102,7 @@ public class CameraMove : MonoBehaviour
             yield break;
         }
 
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(generationDelay);
         generationScript.SpawnRandomChunk();
         genEnabled = true;
 
