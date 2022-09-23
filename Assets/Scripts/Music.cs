@@ -1,3 +1,4 @@
+/* Author: Valentin */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,7 @@ public class Music : MonoBehaviour
         audioSource = transform.GetComponent<AudioSource>();
         if(sliderSon == null)
         {
-            throw new System.Exception("Slider non défini");
+            throw new System.Exception("Slider non dï¿½fini");
         }
         sliderSon.maxValue = maxVolume;
         sliderSon.value = sliderSon.maxValue;
@@ -33,7 +34,7 @@ public class Music : MonoBehaviour
             
             //Subscribing to Pause / Unpause Events
             //...
-            // Note de Gwen, j'ai fait quelques modifs pour la musique notament la pause du jeu et les clips qui ne doivent être joués que si la vitese est au max 
+            // Note de Gwen, j'ai fait quelques modifs pour la musique notament la pause du jeu et les clips qui ne doivent ï¿½tre jouï¿½s que si la vitese est au max 
         }
 
     }

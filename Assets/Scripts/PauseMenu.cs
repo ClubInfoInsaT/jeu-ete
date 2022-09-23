@@ -11,17 +11,19 @@ public class PauseMenu : MonoBehaviour
     public GameObject PauseUI,GameUI,DeathUI;
     public GameObject[] UIs;
     public AudioSource source;
-    public static UnityEvent PauseEvent,ResumeEvent;
-    private bool gameState = false; //false = pause true= ingame
+    private bool gameState = true; //false = pause true= ingame
+    
+    //events lié à la pause
+    public delegate void pauseDelegate(PauseMenu t) ; 
+    public event pauseDelegate pauseEvent ;
+    public delegate void unpauseDelegate(PauseMenu t) ; 
+    public event unpauseDelegate resumeEvent ;
 
     private void Start()
     {
-        if (PauseEvent == null)
-            PauseEvent = new UnityEvent();
-        PauseEvent.AddListener(PauseGame);
-        if (ResumeEvent == null)
-            ResumeEvent = new UnityEvent();
-        ResumeEvent.AddListener(ResumeGame);
+        //On s'abonne à l'event
+        pauseEvent += PauseGame ; 
+        resumeEvent += ResumeGame ;
         GameUI.SetActive(true);
         PauseUI.SetActive(false);
         DeathUI.SetActive(false);
@@ -34,13 +36,18 @@ public class PauseMenu : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.P ) )
         {
+            Debug.Log("P pressed");
             if (gameState)
             {
-                ResumeEvent.Invoke();
+                Debug.Log(gameState);
+                if(pauseEvent != null)
+                    pauseEvent(this );
             }
             else
             {
-                PauseEvent.Invoke();
+                Debug.Log(gameState);
+                if(resumeEvent != null)
+                    resumeEvent(this );
             }
             
         }
@@ -51,9 +58,9 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    void PauseGame()
+    void PauseGame(PauseMenu t)
     {
-        gameState = true;
+        gameState = false;
         Time.timeScale = 0f;
         source.Pause();
         Music.pause = true;
@@ -66,9 +73,9 @@ public class PauseMenu : MonoBehaviour
         }
         UIs[0].gameObject.SetActive(true);
     }
-    public void ResumeGame()
+    public void ResumeGame(PauseMenu t)
     {
-        gameState = false; 
+        gameState = true; 
         Music.pause = false;
         Time.timeScale = 1f;
         source.Play();

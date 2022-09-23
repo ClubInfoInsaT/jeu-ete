@@ -31,7 +31,7 @@ public class CameraMove : MonoBehaviour
     }
     public static void TimerRestart(float resetValue)
     {
-        //Remettre le timer à 0 
+        //Remettre le timer ï¿½ 0 
         loadTime = Time.timeSinceLevelLoad;
         countDown = resetValue;
 
@@ -95,7 +95,7 @@ public class CameraMove : MonoBehaviour
 
     IEnumerator Periodic_Generator()
     {   
-        Debug.Log("Update chunk window"+Time.time.ToString()); // Suppression et spawn de chunks (Voir methode de Valentin)
+//        Debug.Log("Update chunk window"+Time.time.ToString()); // Suppression et spawn de chunks (Voir methode de Valentin)
          
         if (PlayerController.playerDead())
         {
