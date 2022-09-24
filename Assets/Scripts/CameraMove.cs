@@ -23,6 +23,9 @@ public class CameraMove : MonoBehaviour
     public float generationDelay = 10f;
     private void Start()
     {
+        //Subscribing to pause event
+        FindObjectOfType<PauseMenu>().pauseEvent += StopGen; 
+        
         text.enabled = true;
         defaultValue = countDown;
         lastCameraCall = Time.time;
@@ -56,12 +59,7 @@ public class CameraMove : MonoBehaviour
             StartCoroutine(Periodic_Generator());
             genEnabled = false;
         }
-        if (Music.pause)
-        {
-            StopAllCoroutines();
-            genEnabled = true;
-        }
-        
+
         if ( Time.time >0 && Time.time - lastCameraCall> cdIncrease)
         {
             if(speed > speedCap - incrementValue)
@@ -83,6 +81,13 @@ public class CameraMove : MonoBehaviour
             cameraPos.Translate(speed * Time.deltaTime * Vector2.right);
         }
     }
+
+    void StopGen(PauseMenu t)
+    {
+        StopAllCoroutines();
+        genEnabled = true;
+    }
+    
     public static bool CountDown()
     {
         return countDown > 0f;

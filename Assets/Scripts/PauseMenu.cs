@@ -63,7 +63,6 @@ public class PauseMenu : MonoBehaviour
         gameState = false;
         Time.timeScale = 0f;
         source.Pause();
-        Music.pause = true;
         CameraMove.genEnabled = false;
         GameUI.SetActive(false);
         PauseUI.SetActive(true);
@@ -75,8 +74,7 @@ public class PauseMenu : MonoBehaviour
     }
     public void ResumeGame(PauseMenu t)
     {
-        gameState = true; 
-        Music.pause = false;
+        gameState = true;
         Time.timeScale = 1f;
         source.Play();
         GameUI.SetActive(true);

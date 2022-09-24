@@ -14,10 +14,16 @@ public class Music : MonoBehaviour
     public AudioSource playerSource;
     public float maxVolume;
 
-    public static bool pause = false; 
-    // Start is called before the first frame update
+    private static bool pause = false; 
+    
+    //Subscribing to pause / resume events
+    
     IEnumerator Start()
     {
+        PauseMenu pauseMenu = FindObjectOfType<PauseMenu>(); 
+        pauseMenu.pauseEvent += pauseMusic; 
+        pauseMenu.resumeEvent += resumeMusic; 
+        
         audioSource = transform.GetComponent<AudioSource>();
         if(sliderSon == null)
         {
@@ -67,6 +73,16 @@ public class Music : MonoBehaviour
         }
     }
 
+    void pauseMusic(PauseMenu t)
+    {
+        pause = true; 
+    }
+
+    
+    void resumeMusic(PauseMenu t)
+    {
+        pause = false; 
+    }
     
     void setVolume(){audioSource.volume = sliderSon.value; PlayerController.source.volume = sliderSon.value; }
 
