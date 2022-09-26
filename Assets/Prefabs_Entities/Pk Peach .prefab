@@ -233,7 +233,6 @@ MonoBehaviour:
   cliplist:
   - {fileID: 8300000, guid: 9913207066ad2c640b50cba7ab5be59c, type: 3}
   - {fileID: 8300000, guid: e85c68b91e012b148b14b5ce3af2ed26, type: 3}
-  source: {fileID: 3426444401810311318}
   defaultSpeed: 1.5
   sprintMultiplier: 1.2
   crouchMultiplier: 0.75
@@ -242,8 +241,8 @@ MonoBehaviour:
   jumpMultiplier: 0.75
   jumpHeight: 15
   anim: {fileID: 3426444401810311316}
-  slimeJump: {fileID: 5872851052103262757}
-  dirtJump: {fileID: 3004892007951986235}
+  slimeJump: {fileID: 4701210566108739848, guid: 4004c59fe23bd844bb2e2d17b3e110e5, type: 3}
+  dirtJump: {fileID: 449982125578793429, guid: 5fdc0fbce38641a45813b23d594c60f1, type: 3}
   slowRate: 0.2
   jumpReduction: 0.75
 --- !u!82 &3426444401810311318
@@ -522,11 +521,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4701210566108739894, guid: 4004c59fe23bd844bb2e2d17b3e110e5, type: 3}
   m_PrefabInstance: {fileID: 1206543520683105069}
   m_PrefabAsset: {fileID: 0}
---- !u!198 &5872851052103262757 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 4701210566108739848, guid: 4004c59fe23bd844bb2e2d17b3e110e5, type: 3}
-  m_PrefabInstance: {fileID: 1206543520683105069}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3426444402741305326
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -587,10 +581,5 @@ PrefabInstance:
 --- !u!4 &2620255817208610029 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 851226301986235139, guid: 5fdc0fbce38641a45813b23d594c60f1, type: 3}
-  m_PrefabInstance: {fileID: 3426444402741305326}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &3004892007951986235 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 449982125578793429, guid: 5fdc0fbce38641a45813b23d594c60f1, type: 3}
   m_PrefabInstance: {fileID: 3426444402741305326}
   m_PrefabAsset: {fileID: 0}

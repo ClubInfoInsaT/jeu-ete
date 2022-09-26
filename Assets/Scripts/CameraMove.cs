@@ -106,7 +106,8 @@ public class CameraMove : MonoBehaviour
         {
             yield break;
         }
-
+        if (!isMaxed())
+            generationDelay -= 0.1f;
         yield return new WaitForSeconds(generationDelay);
         generationScript.SpawnRandomChunk();
         genEnabled = true;

@@ -6026,10 +6026,10 @@ MonoBehaviour:
       - m_Target: {fileID: 3965184902244682653}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: ResumeGame
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 3965184902244682653}
+          m_ObjectArgumentAssemblyTypeName: PauseMenu, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6927,8 +6927,11 @@ MonoBehaviour:
   - {fileID: 6804466239667874875, guid: 54acf2781b906374a80bce0efa6e3eb0, type: 3}
   - {fileID: 6499416352717353681, guid: b40dc58777f89fb4d9549ee89c0a3655, type: 3}
   - {fileID: 1060322457385031139, guid: 144be1048f544a04aba23bb8446e9ac6, type: 3}
-  tutorialChunks: []
-  terrainWindowSize: 10
+  tutorialChunks:
+  - {fileID: 6804466239667874875, guid: 54acf2781b906374a80bce0efa6e3eb0, type: 3}
+  - {fileID: 6804466239667874875, guid: 54acf2781b906374a80bce0efa6e3eb0, type: 3}
+  - {fileID: 1060322457385031139, guid: 144be1048f544a04aba23bb8446e9ac6, type: 3}
+  terrainWindowSize: 30
 --- !u!4 &7602180442581391306
 Transform:
   m_ObjectHideFlags: 0

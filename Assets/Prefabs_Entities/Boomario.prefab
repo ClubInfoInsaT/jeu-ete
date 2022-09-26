@@ -5189,7 +5189,6 @@ MonoBehaviour:
   cliplist:
   - {fileID: 8300000, guid: 9913207066ad2c640b50cba7ab5be59c, type: 3}
   - {fileID: 8300000, guid: e85c68b91e012b148b14b5ce3af2ed26, type: 3}
-  source: {fileID: 5841952203724469331}
   defaultSpeed: 1.5
   sprintMultiplier: 1.2
   crouchMultiplier: 0.75
@@ -5198,8 +5197,8 @@ MonoBehaviour:
   jumpMultiplier: 0.75
   jumpHeight: 15
   anim: {fileID: 5841952203724469332}
-  slimeJump: {fileID: 5841952204168080361}
-  dirtJump: {fileID: 5841952203924302031}
+  slimeJump: {fileID: 4701210566108739848, guid: 4004c59fe23bd844bb2e2d17b3e110e5, type: 3}
+  dirtJump: {fileID: 449982125578793429, guid: 5fdc0fbce38641a45813b23d594c60f1, type: 3}
   slowRate: 0.2
   jumpReduction: 0.75
 --- !u!82 &5841952203724469331

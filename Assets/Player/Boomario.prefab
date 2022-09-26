@@ -303,6 +303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47cfcfec3e16d274c95441257317ac87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawn: {fileID: 0}
   rb2D: {fileID: 0}
   bodyCollider: {fileID: 9039594185100299513}
   groundCheck: {fileID: 9039594183652137839}
@@ -315,7 +316,6 @@ MonoBehaviour:
     m_Bits: 8
   cliplist:
   - {fileID: 8300000, guid: 9913207066ad2c640b50cba7ab5be59c, type: 3}
-  source: {fileID: 2617162880194285890}
   defaultSpeed: 1.5
   sprintMultiplier: 1.2
   crouchMultiplier: 0.75
@@ -324,6 +324,10 @@ MonoBehaviour:
   jumpMultiplier: 0.6
   jumpHeight: 15
   anim: {fileID: 9039594185100299516}
+  slimeJump: {fileID: 4701210566108739848, guid: 4004c59fe23bd844bb2e2d17b3e110e5, type: 3}
+  dirtJump: {fileID: 449982125578793429, guid: 5fdc0fbce38641a45813b23d594c60f1, type: 3}
+  slowRate: 0
+  jumpReduction: 0
 --- !u!82 &2617162880194285890
 AudioSource:
   m_ObjectHideFlags: 0
