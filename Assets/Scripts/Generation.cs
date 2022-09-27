@@ -16,11 +16,19 @@ public class Generation : MonoBehaviour
 		// On indique donc combien de fois il est plus ou moins probable d'apparaitre (2 fois plus, 1.5 fois plus, 0 fois plus ...)
 		public float constraintCoefficient ;
 	}
-	private Dictionary<GameObject,List<KeyValuePair<GameObject,float>>> adjacencyMatrix = new();
-
-	public List<GameObject> chunks = new();
-	[Header("Chunks d'intro pour apprendre à jouer\n(par exemple un terrain plat)")] 
+	
+		
+	[Serializable]
+	public struct BiomeChunkList
+	{
+		public List<GameObject> chunks;
+	}
+	public List<BiomeChunkList> BiomeChunkLists = new() ;
+	private Dictionary<GameObject, List<KeyValuePair<GameObject, float>>>[] BiomeAdjacencyMatrices ; 
+	
+	[Header("Tutorial intro chunks\n(a flat terrain for example)")] 
 	public List<GameObject> tutorialChunks = new();
+	[Header("Size of the sliding window (terrain lenght)")]
 	public int terrainWindowSize; 
  
 	//[SerializeField]
@@ -29,71 +37,92 @@ public class Generation : MonoBehaviour
 	private int currentChunkIndex = 0; // between 0 and TerrainWindowSize-1
 	private Transform gridTrans;
 	private GameObject newChunk;
+
+	private List<GameObject> currentChunkList = new(); 
+	private Dictionary<GameObject, List<KeyValuePair<GameObject, float>>> currentAdjacencyMatrix = new(); 
 	// Start is called before the first frame update
 	void Start()
 	{
 		gridTrans = GameObject.FindGameObjectWithTag("Grid").transform;
 		terrain = new GameObject[terrainWindowSize];
-
-		
-		//Setting up adjacency matrix
-		// Iterating over each chunk to properly set up its probability vector
-
-		foreach (GameObject chunkX in chunks)
+		BiomeAdjacencyMatrices =
+			new Dictionary<GameObject, List<KeyValuePair<GameObject, float>>>[BiomeChunkLists.Count]; 
+		// Iterating over each biome chunk lists to set up each adjacency matrices
+		for (int biomeIndex = 0 ; biomeIndex < BiomeChunkLists.Count ; biomeIndex++)
 		{
-			Debug.Log(chunkX.name);
-			// Part 1: Setting default coefficient to 1f (that will become 1/<number of chunks> right after) 
-			List<KeyValuePair<GameObject, float>> adjacencyVector = new List<KeyValuePair<GameObject, float>>(chunks.Count);
-			foreach (GameObject chunkY in chunks)
+			BiomeAdjacencyMatrices[biomeIndex] = new(); 
+			//Setting up adjacency matrix
+			// Iterating over each chunk to properly set up its probability vector
+			foreach (GameObject chunkX in BiomeChunkLists[biomeIndex].chunks)
 			{
-				adjacencyVector.Add(new KeyValuePair<GameObject,float>(chunkY,1f));
-			}
-			
-			// Part 2: Replacing exceptions to the default setting in the vector 
-			float accumulatedConstraints = 0;
-			int nbConstraints = chunkX.GetComponent<AdjacencyConstraint>().constraints.Count; 
-			foreach (Constraint constraint in chunkX.GetComponent<AdjacencyConstraint>().constraints)
-			{
-				Debug.Log("computing excp prob for " + constraint.chunk.name); 
-				int index = adjacencyVector.FindIndex(pair => pair.Key.Equals(constraint.chunk));
-				float proba = constraint.constraintCoefficient / chunks.Count; 
-				adjacencyVector[index] = new KeyValuePair<GameObject, float>(constraint.chunk,proba);
-				Debug.Log("new prob (constraint) for "+adjacencyVector[index].Key+" : "+proba);
-				accumulatedConstraints += proba; 
-			}
-
-			//Part 3: Computing actual probabilities completed by their accumulated predecessors (to deal with random chunk selection later)
-			if (chunks.Count != nbConstraints)
-			{
-				float accumulator = 0f;
-				for (int index = 0; index < chunks.Count; index++)
+				//Debug.Log(chunkX.name);
+				// Part 1: Setting default coefficient to 1f (that will become 1/<number of chunks> right after) 
+				List<KeyValuePair<GameObject, float>> adjacencyVector =
+					new List<KeyValuePair<GameObject, float>>(BiomeChunkLists[biomeIndex].chunks.Count);
+				
+				foreach (GameObject chunkY in BiomeChunkLists[biomeIndex].chunks)
 				{
-					if (!chunkX.GetComponent<AdjacencyConstraint>().constraints //Default
-						    .Exists(constraint => constraint.chunk.Equals(adjacencyVector[index].Key)))
+					adjacencyVector.Add(new KeyValuePair<GameObject, float>(chunkY, 1f));
+				}
+
+				// Part 2: Replacing exceptions to the default setting in the vector 
+				float accumulatedConstraints = 0;
+				int nbConstraints = chunkX.GetComponent<AdjacencyConstraint>().constraints.Count;
+				foreach (Constraint constraint in chunkX.GetComponent<AdjacencyConstraint>().constraints)
+				{
+					int index = adjacencyVector.FindIndex(pair => pair.Key.Equals(constraint.chunk));
+					if (index != -1)
 					{
-						accumulator += (1 - accumulatedConstraints) / (chunks.Count - nbConstraints);
-						adjacencyVector[index] = new KeyValuePair<GameObject, float>
-							(adjacencyVector[index].Key, accumulator);
+						float proba = constraint.constraintCoefficient / BiomeChunkLists[biomeIndex].chunks.Count;
+						Debug.Log(index + "   " + adjacencyVector.Count);
+						adjacencyVector[index] = new KeyValuePair<GameObject, float>(constraint.chunk, proba);
+						//Debug.Log("new prob (constraint) for " + adjacencyVector[index].Key + " : " + proba);
+						accumulatedConstraints += proba;
 					}
 					else
 					{
-						accumulator += adjacencyVector[index].Value;
-						adjacencyVector[index] = new KeyValuePair<GameObject, float>
-							(adjacencyVector[index].Key, accumulator);
+						Debug.Log("Couldn't find "+constraint.chunk.name+" in biome chunk list. Replaced with default probability.");
 					}
-						
 				}
+
+				//Part 3: Computing actual probabilities completed by their accumulated predecessors (to deal with random chunk selection later)
+				if (BiomeChunkLists[biomeIndex].chunks.Count != nbConstraints)
+				{
+					float accumulator = 0f;
+					for (int index = 0; index < BiomeChunkLists[biomeIndex].chunks.Count; index++)
+					{
+						if (!chunkX.GetComponent<AdjacencyConstraint>().constraints //Default
+							    .Exists(constraint => constraint.chunk.Equals(adjacencyVector[index].Key)))
+						{
+							accumulator += (1 - accumulatedConstraints) / (BiomeChunkLists[biomeIndex].chunks.Count - nbConstraints);
+							adjacencyVector[index] = new KeyValuePair<GameObject, float>
+								(adjacencyVector[index].Key, accumulator);
+						}
+						else
+						{
+							accumulator += adjacencyVector[index].Value;
+							adjacencyVector[index] = new KeyValuePair<GameObject, float>
+								(adjacencyVector[index].Key, accumulator);
+						}
+					}
+				}
+
+				Debug.Log(chunkX + "    " + adjacencyVector); 
+				BiomeAdjacencyMatrices[biomeIndex].Add(chunkX, adjacencyVector);
 			}
-			adjacencyMatrix.Add(chunkX,adjacencyVector);
+			
 		}
+		//Initiating first biome
+		currentChunkList = BiomeChunkLists[0].chunks ;
+		currentAdjacencyMatrix = BiomeAdjacencyMatrices[0] ;
 		
 		//Generating initial chunks
 		foreach (GameObject chunk in tutorialChunks)
 		{
 			SpawnChunk(chunk);
 		}
-		newChunk = chunks[Random.Range(0, chunks.Count)];
-		for (int i = 0; i < terrainWindowSize-tutorialChunks.Count; i++)
+		newChunk = currentChunkList[Random.Range(0, currentChunkList.Count)];
+		for (int i = 0; i < terrainWindowSize - tutorialChunks.Count; i++)
 		{
 			Invoke("SpawnRandomChunk", 0.1f);
 		}
@@ -106,8 +135,8 @@ public class Generation : MonoBehaviour
 		// Iterating over the current chunk's probability vector (with accumulation of each predecessor)
 		// The first correct threshold gives us the new chunk
 		
-		int newChunkIndex = adjacencyMatrix[newChunk].FindIndex(pair => randomFloat <= pair.Value);
-		newChunk = adjacencyMatrix[newChunk][newChunkIndex].Key;
+		int newChunkIndex = currentAdjacencyMatrix[newChunk].FindIndex(pair => randomFloat <= pair.Value);
+		newChunk = currentAdjacencyMatrix[newChunk][newChunkIndex].Key;
 		SpawnChunk(newChunk);
 		
 	}
@@ -131,5 +160,7 @@ public class Generation : MonoBehaviour
 		currentChunkIndex = (currentChunkIndex + 1) % terrainWindowSize; 
 
 	}
+	
+	
 	
 }
