@@ -332,6 +332,10 @@ PrefabInstance:
       propertyPath: chunks.Array.data[12]
       value: 
       objectReference: {fileID: 1060322457385031139, guid: 144be1048f544a04aba23bb8446e9ac6, type: 3}
+    - target: {fileID: 7602180443215361183, guid: 8aeff0282b333a300931e689b31895d1, type: 3}
+      propertyPath: BiomeChunkLists.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7602180443497347683, guid: 8aeff0282b333a300931e689b31895d1, type: 3}
       propertyPath: m_RootOrder
       value: 0

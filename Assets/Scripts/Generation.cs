@@ -39,10 +39,16 @@ public class Generation : MonoBehaviour
 	private GameObject newChunk;
 
 	private List<GameObject> currentChunkList = new(); 
-	private Dictionary<GameObject, List<KeyValuePair<GameObject, float>>> currentAdjacencyMatrix = new(); 
+	private Dictionary<GameObject, List<KeyValuePair<GameObject, float>>> currentAdjacencyMatrix = new();
+
+	private int currentBiomeIndex = 0;
+
+	private bool isNextBiome = false;
 	// Start is called before the first frame update
 	void Start()
 	{
+		//Subscribing to nextBiomeEvent 
+		FindObjectOfType<ScoreManager>().nextBiomeEvent += NextBiome;  
 		gridTrans = GameObject.FindGameObjectWithTag("Grid").transform;
 		terrain = new GameObject[terrainWindowSize];
 		BiomeAdjacencyMatrices =
@@ -74,14 +80,14 @@ public class Generation : MonoBehaviour
 					if (index != -1)
 					{
 						float proba = constraint.constraintCoefficient / BiomeChunkLists[biomeIndex].chunks.Count;
-						Debug.Log(index + "   " + adjacencyVector.Count);
+						//Debug.Log(index + "   " + adjacencyVector.Count);
 						adjacencyVector[index] = new KeyValuePair<GameObject, float>(constraint.chunk, proba);
 						//Debug.Log("new prob (constraint) for " + adjacencyVector[index].Key + " : " + proba);
 						accumulatedConstraints += proba;
 					}
 					else
 					{
-						Debug.Log("Couldn't find "+constraint.chunk.name+" in biome chunk list. Replaced with default probability.");
+					//	Debug.Log("Couldn't find "+constraint.chunk.name+" in biome chunk list. Replaced with default probability.");
 					}
 				}
 
@@ -107,14 +113,14 @@ public class Generation : MonoBehaviour
 					}
 				}
 
-				Debug.Log(chunkX + "    " + adjacencyVector); 
+			//	Debug.Log(chunkX + "    " + adjacencyVector); 
 				BiomeAdjacencyMatrices[biomeIndex].Add(chunkX, adjacencyVector);
 			}
 			
 		}
 		//Initiating first biome
-		currentChunkList = BiomeChunkLists[0].chunks ;
-		currentAdjacencyMatrix = BiomeAdjacencyMatrices[0] ;
+		currentChunkList = BiomeChunkLists[currentBiomeIndex].chunks ;
+		currentAdjacencyMatrix = BiomeAdjacencyMatrices[currentBiomeIndex] ;
 		
 		//Generating initial chunks
 		foreach (GameObject chunk in tutorialChunks)
@@ -134,9 +140,20 @@ public class Generation : MonoBehaviour
 		float randomFloat = Random.Range(0f, 1f);
 		// Iterating over the current chunk's probability vector (with accumulation of each predecessor)
 		// The first correct threshold gives us the new chunk
-		
 		int newChunkIndex = currentAdjacencyMatrix[newChunk].FindIndex(pair => randomFloat <= pair.Value);
 		newChunk = currentAdjacencyMatrix[newChunk][newChunkIndex].Key;
+		if (isNextBiome)
+		{
+			isNextBiome = false;
+			//randomize biome sequence in a future version?
+			currentBiomeIndex = (currentBiomeIndex == BiomeChunkLists.Count - 1 ? 0 : currentBiomeIndex + 1);
+			//Next biome
+			currentChunkList = BiomeChunkLists[currentBiomeIndex].chunks;
+			currentAdjacencyMatrix = BiomeAdjacencyMatrices[currentBiomeIndex];
+			newChunk = currentChunkList[Random.Range(0, currentChunkList.Count)];
+			
+		}
+
 		SpawnChunk(newChunk);
 		
 	}
@@ -159,6 +176,11 @@ public class Generation : MonoBehaviour
 		//updating chunk index in the terrain window
 		currentChunkIndex = (currentChunkIndex + 1) % terrainWindowSize; 
 
+	}
+
+	public void NextBiome(ScoreManager t)
+	{
+		isNextBiome = true;
 	}
 	
 	

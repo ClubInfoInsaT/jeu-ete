@@ -1900,6 +1900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 1250540625}
   cdScore: 0.5
+  nextBiomeStep: 0
 --- !u!114 &1250540625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6911,6 +6912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text: {fileID: 856317986501221379}
   cdScore: 0.5
+  nextBiomeStep: 5
 --- !u!1 &5448650041191682888
 GameObject:
   m_ObjectHideFlags: 0
@@ -6980,21 +6982,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50afb006c4a4b03e4a6446be6c2de17d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chunks:
-  - {fileID: 6229151984327374317, guid: 37daa5a63068e7147b0f9dfc5f28f8c0, type: 3}
-  - {fileID: 7173648812668833195, guid: 3a85c5f2517d44d49b3d9c4df3da7e70, type: 3}
-  - {fileID: 4601729167427527566, guid: e81dc479e252b1f4d98c371f2e6ee914, type: 3}
-  - {fileID: 7590891355460505299, guid: bdffd8f9480102441b65af4b5e118c90, type: 3}
-  - {fileID: 5951970870603650439, guid: 1a4a283a0642b144fa7aeb88deb01177, type: 3}
-  - {fileID: 3661775478453266296, guid: eb2cb193b28539f428ce511a1d29700d, type: 3}
-  - {fileID: 6804466239667874875, guid: 54acf2781b906374a80bce0efa6e3eb0, type: 3}
-  - {fileID: 6499416352717353681, guid: b40dc58777f89fb4d9549ee89c0a3655, type: 3}
-  - {fileID: 1060322457385031139, guid: 144be1048f544a04aba23bb8446e9ac6, type: 3}
+  BiomeChunkLists:
+  - chunks:
+    - {fileID: 4601729167427527566, guid: 9a480e75767a67648ac64753ed6e2b4f, type: 3}
+    - {fileID: 4601729167427527566, guid: e81dc479e252b1f4d98c371f2e6ee914, type: 3}
+    - {fileID: 7590891355460505299, guid: bdffd8f9480102441b65af4b5e118c90, type: 3}
+    - {fileID: 5951970870603650439, guid: 06499ece21b90a04bae4fb437e249777, type: 3}
+    - {fileID: 5951970870603650439, guid: 1a4a283a0642b144fa7aeb88deb01177, type: 3}
+    - {fileID: 3122563151503498919, guid: 8e53016c2c7aec14389ceeb311988f91, type: 3}
+    - {fileID: 3661775478453266296, guid: 31a42dae8c6d607498d8843e670ddab2, type: 3}
+    - {fileID: 3661775478453266296, guid: eb2cb193b28539f428ce511a1d29700d, type: 3}
+    - {fileID: 6804466239667874875, guid: 54acf2781b906374a80bce0efa6e3eb0, type: 3}
+    - {fileID: 6499416352717353681, guid: 5ab20508df3b2794681f170048d821b9, type: 3}
+    - {fileID: 6499416352717353681, guid: b40dc58777f89fb4d9549ee89c0a3655, type: 3}
+    - {fileID: 1060322457385031139, guid: 3e586c01d86a26f418a638a318aea084, type: 3}
+    - {fileID: 1060322457385031139, guid: 144be1048f544a04aba23bb8446e9ac6, type: 3}
+  - chunks:
+    - {fileID: 2014982816906272887, guid: 9a724878693a2eb4f8d5218cf72cc750, type: 3}
+    - {fileID: 1448250069006258170, guid: f2c29de6e2ba10a4ea98660dad6352dc, type: 3}
+    - {fileID: 4616875390391671101, guid: f6558d9c31c9182439c0419618efd3ba, type: 3}
+    - {fileID: 4224037139004755534, guid: 7ca96c834ca35824a8d98aea7a4635ad, type: 3}
+    - {fileID: 13549502230542470, guid: 6793f39c711212948b87da009d6dbe72, type: 3}
+    - {fileID: 8514526472645276313, guid: efccca1120574314884833f29c1f5bf6, type: 3}
   tutorialChunks:
   - {fileID: 6804466239667874875, guid: 54acf2781b906374a80bce0efa6e3eb0, type: 3}
   - {fileID: 6804466239667874875, guid: 54acf2781b906374a80bce0efa6e3eb0, type: 3}
   - {fileID: 1060322457385031139, guid: 144be1048f544a04aba23bb8446e9ac6, type: 3}
-  terrainWindowSize: 30
+  terrainWindowSize: 5
 --- !u!4 &7602180442581391306
 Transform:
   m_ObjectHideFlags: 0
