@@ -78,7 +78,6 @@ public class PauseMenu : MonoBehaviour
         source.Play();
         GameUI.SetActive(true);
         PauseUI.SetActive(false);  
-
     }
     public void Resume() {if (resumeEvent != null) resumeEvent(this);}
     public void DisplayControl()
@@ -119,9 +118,11 @@ public class PauseMenu : MonoBehaviour
         GameUI.SetActive(false);
         PauseUI.SetActive(false);
     }
+
     public bool StateOfGame()
     {
         return gameState; 
     }
+
 }
     

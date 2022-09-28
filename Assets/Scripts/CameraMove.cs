@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
+using System.Diagnostics.CodeAnalysis;
+using UnityEngine.Tilemaps;
 
 public class CameraMove : MonoBehaviour
 {
@@ -27,6 +29,9 @@ public class CameraMove : MonoBehaviour
     public float spawnDelay;
     public PauseMenu pauseScript;
     int count = 0;
+    GameObject[] windowArray;
+    private bool screenState;
+    public float despawnDist;
     private void Start()
     {
         //Subscribing to pause event
@@ -65,11 +70,11 @@ public class CameraMove : MonoBehaviour
         if (pauseScript.StateOfGame())
         {
             effectiveTime += Time.deltaTime;
-            if (genEnabled)
+            /*if (genEnabled)
             {
                 genEnabled = false;
                 StartCoroutine(Auto_Generate());
-            }
+            }*/
         }
        
         if ( Time.time >0 && Time.time - lastCameraCall> cdIncrease)
@@ -88,11 +93,13 @@ public class CameraMove : MonoBehaviour
             }
             
         }
+
         if (!PlayerController.playerDead())
         {
             
             cameraPos.Translate(speed * Time.deltaTime * Vector2.right);
         }
+        UpdateWindow();
     }
 
     /*void StopGen(PauseMenu t)
@@ -172,5 +179,22 @@ public class CameraMove : MonoBehaviour
         genEnabled = true; 
     }
 
+    void UpdateWindow()
+    {
+        windowArray = generationScript.getTerrain();
+        TilemapRenderer render = windowArray[0].transform.GetChild(0).GetComponent<TilemapRenderer>();
+        //screenState = cameraPos.GetComponent<Camera>().WorldToScreenPoint(windowArray[0].transform.position).x < -10 * windowArray[0].transform.GetChild(0).GetComponent<UnityEngine.Tilemaps.Tilemap>().size.x ? true : false;
+        if (!render.isVisible && cameraPos.GetComponent<Camera>().WorldToScreenPoint(windowArray[0].transform.position).x <0 )
+        {
+            Debug.Log("UPDATE CHUNK");
+            generationScript.SpawnRandomChunk();
+        }
+        /*if (screenState)
+        {
+            Debug.Log("UPDATE CHUNK");
+            generationScript.SpawnRandomChunk();
+        }*/
 
+    }
+    
 }

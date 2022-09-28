@@ -52,7 +52,6 @@ public class Music : MonoBehaviour
     void Update()
     {
 
-        Debug.Log(audioSource.isPlaying);
         if (PlayerController.playerDead())
         {
             audioSource.Pause();
