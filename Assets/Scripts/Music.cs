@@ -51,6 +51,8 @@ public class Music : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        Debug.Log(audioSource.isPlaying);
         if (PlayerController.playerDead())
         {
             audioSource.Pause();
@@ -71,7 +73,8 @@ public class Music : MonoBehaviour
                     audioSource.clip = LoopClips[Random.Range(0, LoopClips.Length)];
                     Debug.Log("Now Playing : " + audioSource.clip.name);
                 }
-                audioSource.Play();
+
+            audioSource.Play();  
             }
         }
     }

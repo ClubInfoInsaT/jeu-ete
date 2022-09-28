@@ -41,13 +41,13 @@ public class PauseMenu : MonoBehaviour
             {
                 Debug.Log(gameState);
                 if(pauseEvent != null)
-                    pauseEvent(this );
+                    pauseEvent(this);
             }
             else
             {
                 Debug.Log(gameState);
-                if(resumeEvent != null)
-                    resumeEvent(this );
+                Resume();
+                    
             }
             
         }
@@ -63,7 +63,6 @@ public class PauseMenu : MonoBehaviour
         gameState = false;
         Time.timeScale = 0f;
         source.Pause();
-        CameraMove.genEnabled = false;
         GameUI.SetActive(false);
         PauseUI.SetActive(true);
         for(int i = 0; i < UIs.Length; i++)
@@ -79,8 +78,9 @@ public class PauseMenu : MonoBehaviour
         source.Play();
         GameUI.SetActive(true);
         PauseUI.SetActive(false);  
-        CameraMove.genEnabled = true;
+
     }
+    public void Resume() {if (resumeEvent != null) resumeEvent(this);}
     public void DisplayControl()
     {
         UIs[(int)UIlist.Menu].gameObject.SetActive(false);
