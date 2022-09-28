@@ -182,7 +182,11 @@ public class Generation : MonoBehaviour
 	{
 		isNextBiome = true;
 	}
-	
+
+	public GameObject[] getTerrain()
+	{
+		return terrain; 
+	}
 	
 	
 }
