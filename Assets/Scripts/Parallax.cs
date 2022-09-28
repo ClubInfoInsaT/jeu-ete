@@ -1,36 +1,26 @@
-using System;
+/* Author :  Dani https://www.youtube.com/watch?v=zit45k6CUMk */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Parallax : MonoBehaviour
 {
-    [Serializable]
-    public struct BackgroundElement
-    {
-        public GameObject sprite;
-        public float depth; 
-    }
+    private float length, startPos;
+    public GameObject cam;
+    public float parallexEffect;
 
-    public List<BackgroundElement> backgroundElementList = new(); 
-    // Start is called before the first frame update
-    void Start()
-    {
-        for (int i = 0; i < 50; i++)
-        {
-            foreach (BackgroundElement backgroundElement in backgroundElementList)
-            {
-                Transform t = backgroundElement.sprite.transform;
-                t.localScale = backgroundElement.depth * backgroundElement.sprite.transform.localScale ; 
-                Instantiate(backgroundElement.sprite); 
-                
-            }
-        }
+    void Start () {
+        startPos = transform.position.x;
+        length = GetComponent<SpriteRenderer>().bounds.size.x;
     }
+	
+    void FixedUpdate () {
+        float temp = (cam.transform.position.x * (1-parallexEffect));
+        float dist = (cam.transform.position.x*parallexEffect);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        transform.position = new Vector3(startPos + dist, transform.position.y, transform.position.z);
+
+        if      (temp > startPos + length) startPos += length;
+        else if (temp < startPos - length) startPos -= length;
     }
 }
