@@ -11,6 +11,7 @@ public class Music : MonoBehaviour
     public AudioClip[] LoopClips;
     public bool SkipIntro; 
     private AudioSource audioSource;
+    public GameObject SpawnSource;
     public AudioSource playerSource;
     public float maxVolume;
 
@@ -22,7 +23,9 @@ public class Music : MonoBehaviour
     {
         PauseMenu pauseMenu = FindObjectOfType<PauseMenu>(); 
         pauseMenu.pauseEvent += pauseMusic; 
-        pauseMenu.resumeEvent += resumeMusic; 
+        pauseMenu.resumeEvent += resumeMusic;
+
+        playerSource = SpawnSource.GetComponentInChildren<AudioSource>();
         
         audioSource = transform.GetComponent<AudioSource>();
         if(sliderSon == null)

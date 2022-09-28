@@ -119,10 +119,9 @@ public class PauseMenu : MonoBehaviour
         GameUI.SetActive(false);
         PauseUI.SetActive(false);
     }
-    void TimerRestart()
+    public bool StateOfGame()
     {
-        Debug.Log("Resume Game");
-
+        return gameState; 
     }
 }
     

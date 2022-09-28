@@ -29,6 +29,8 @@ public class ScoreManager : MonoBehaviour
             text.enabled  = false;
             return;
         }
+
+
         {
             text.enabled = true;
         }
