@@ -9,16 +9,10 @@ public class ScoreManager : MonoBehaviour
     public static int score=0;
     private float lastTime=0f;
     public float cdScore;
-    
-    //event passage au biome suivant
-    public delegate void nextBiomeDelegate(ScoreManager t) ; 
-    public event nextBiomeDelegate nextBiomeEvent ;
-    public int nextBiomeStep;
-    private int currentBiomeStep = 0 ; 
     private void Start()
     {
         score = 0;
-        currentBiomeStep = nextBiomeStep; 
+
     }
     // Update is called once per frame
     void Update()
@@ -38,12 +32,6 @@ public class ScoreManager : MonoBehaviour
         {
             lastTime = Time.time;
             score++;
-            if (score >= currentBiomeStep && nextBiomeEvent != null)
-            {
-                nextBiomeEvent(this);
-                Debug.Log("Changement de biome. "+score);
-                currentBiomeStep += nextBiomeStep; 
-            }
         }
         text.text = score.ToString();
     }

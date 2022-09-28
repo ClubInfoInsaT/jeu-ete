@@ -43,12 +43,16 @@ public class Generation : MonoBehaviour
 
 	private int currentBiomeIndex = 0;
 
-	private bool isNextBiome = false;
+	//event passage au biome suivant
+	public delegate void nextBiomeDelegate(Generation t) ; 
+	public event nextBiomeDelegate nextBiomeEvent ;
+	
+	private int biomeSize = 0;
+	[Header("How many chunks per biome?")] 
+	public int maxBiomeChunkCount;
 	// Start is called before the first frame update
 	void Start()
 	{
-		//Subscribing to nextBiomeEvent 
-		FindObjectOfType<ScoreManager>().nextBiomeEvent += NextBiome;  
 		gridTrans = GameObject.FindGameObjectWithTag("Grid").transform;
 		terrain = new GameObject[terrainWindowSize];
 		BiomeAdjacencyMatrices =
@@ -142,22 +146,22 @@ public class Generation : MonoBehaviour
 		// The first correct threshold gives us the new chunk
 		int newChunkIndex = currentAdjacencyMatrix[newChunk].FindIndex(pair => randomFloat <= pair.Value);
 		newChunk = currentAdjacencyMatrix[newChunk][newChunkIndex].Key;
-		if (isNextBiome)
+		if (biomeSize > maxBiomeChunkCount)
 		{
-			isNextBiome = false;
+			Debug.Log("Passage au biome suivant");
+			biomeSize = 0;
 			//randomize biome sequence in a future version?
 			currentBiomeIndex = (currentBiomeIndex == BiomeChunkLists.Count - 1 ? 0 : currentBiomeIndex + 1);
 			//Next biome
 			currentChunkList = BiomeChunkLists[currentBiomeIndex].chunks;
 			currentAdjacencyMatrix = BiomeAdjacencyMatrices[currentBiomeIndex];
 			newChunk = currentChunkList[Random.Range(0, currentChunkList.Count)];
-			
+			if(nextBiomeEvent != null) nextBiomeEvent(this); 
 		}
 
 		SpawnChunk(newChunk);
 		
 	}
-
 	// Instantiate a new chunk to replace the useless one
 	private void SpawnChunk(GameObject newChunk)
 	{
@@ -174,15 +178,11 @@ public class Generation : MonoBehaviour
 		terrain[currentChunkIndex] = Instantiate(newChunk, new Vector3(newPos,0,0) , Quaternion.identity, gridTrans);
 		
 		//updating chunk index in the terrain window
-		currentChunkIndex = (currentChunkIndex + 1) % terrainWindowSize; 
+		currentChunkIndex = (currentChunkIndex + 1) % terrainWindowSize;
+
+		biomeSize++;
 
 	}
-
-	public void NextBiome(ScoreManager t)
-	{
-		isNextBiome = true;
-	}
-
 	public GameObject[] getTerrain()
 	{
 		return terrain; 

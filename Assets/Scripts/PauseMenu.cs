@@ -36,16 +36,16 @@ public class PauseMenu : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.P ) )
         {
-            Debug.Log("P pressed");
+            //Debug.Log("P pressed");
             if (gameState)
             {
-                Debug.Log(gameState);
+                //Debug.Log(gameState);
                 if(pauseEvent != null)
                     pauseEvent(this);
             }
             else
             {
-                Debug.Log(gameState);
+                //Debug.Log(gameState);
                 Resume();
                     
             }

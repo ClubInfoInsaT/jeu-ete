@@ -186,7 +186,7 @@ public class CameraMove : MonoBehaviour
         //screenState = cameraPos.GetComponent<Camera>().WorldToScreenPoint(windowArray[0].transform.position).x < -10 * windowArray[0].transform.GetChild(0).GetComponent<UnityEngine.Tilemaps.Tilemap>().size.x ? true : false;
         if (!render.isVisible && cameraPos.GetComponent<Camera>().WorldToScreenPoint(windowArray[0].transform.position).x <0 )
         {
-            Debug.Log("UPDATE CHUNK");
+            //Debug.Log("UPDATE CHUNK");
             generationScript.SpawnRandomChunk();
         }
         /*if (screenState)
