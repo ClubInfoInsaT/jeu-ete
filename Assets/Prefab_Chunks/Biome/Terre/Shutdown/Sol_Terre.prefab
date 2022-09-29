@@ -58,7 +58,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc97bbd68418511ceb243dde487aec84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  constraints: []
+  constraints:
+  - chunk: {fileID: 82273940656761014, guid: 504cbfafd3aed67409e5141b9df266fb, type: 3}
+    constraintCoefficient: 0
+  - chunk: {fileID: 490686527374032633, guid: 1e5104e65ad7d2649abe7d5a1a133977, type: 3}
+    constraintCoefficient: 0
 --- !u!1 &7692633473951690476
 GameObject:
   m_ObjectHideFlags: 0

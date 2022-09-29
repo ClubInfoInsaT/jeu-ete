@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using TMPro;
+using static PlayerDesign;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject PauseUI,GameUI,DeathUI;
     public GameObject[] UIs;
     public AudioSource source;
+    public TMP_Text highscore;
+    public TMP_Text score;
     private bool gameState = true; //false = pause true= ingame
     
     //events lié à la pause
@@ -117,6 +121,19 @@ public class PauseMenu : MonoBehaviour
         DeathUI.SetActive(true);
         GameUI.SetActive(false);
         PauseUI.SetActive(false);
+        string teamdisplay ="none"; 
+        switch (FindObjectOfType<PlayerDesign>().index)
+        {
+            case (int)team.PKPeach:
+                teamdisplay = "PK Peach";
+                break;
+            case (int)team.BooMario:
+                teamdisplay = "BooMario";
+                break;
+        }
+        score.text = "Your  Highscore : " + ScoreManager.totalScore + " by team " + teamdisplay;
+        highscore.text = "Current Highscore : " + PlayerPrefs.GetFloat("highscore") + " \n by team " + PlayerPrefs.GetString("Teamname");
+        PlayerPrefs.Save();
     }
 
     public bool StateOfGame()

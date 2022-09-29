@@ -99,7 +99,6 @@ public class CameraMove : MonoBehaviour
             
             cameraPos.Translate(speed * Time.deltaTime * Vector2.right);
         }
-        UpdateWindow();
     }
 
     /*void StopGen(PauseMenu t)
@@ -179,22 +178,5 @@ public class CameraMove : MonoBehaviour
         genEnabled = true; 
     }
 
-    void UpdateWindow()
-    {
-        windowArray = generationScript.getTerrain();
-        TilemapRenderer render = windowArray[0].transform.GetChild(0).GetComponent<TilemapRenderer>();
-        //screenState = cameraPos.GetComponent<Camera>().WorldToScreenPoint(windowArray[0].transform.position).x < -10 * windowArray[0].transform.GetChild(0).GetComponent<UnityEngine.Tilemaps.Tilemap>().size.x ? true : false;
-        if (!render.isVisible && cameraPos.GetComponent<Camera>().WorldToScreenPoint(windowArray[0].transform.position).x <0 )
-        {
-            //Debug.Log("UPDATE CHUNK");
-            generationScript.SpawnRandomChunk();
-        }
-        /*if (screenState)
-        {
-            Debug.Log("UPDATE CHUNK");
-            generationScript.SpawnRandomChunk();
-        }*/
-
-    }
     
 }
