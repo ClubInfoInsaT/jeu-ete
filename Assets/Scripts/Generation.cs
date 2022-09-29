@@ -17,12 +17,13 @@ public class Generation : MonoBehaviour
 		public float constraintCoefficient ;
 	}
 	
-		
 	[Serializable]
 	public struct BiomeChunkList
 	{
 		public List<GameObject> chunks;
+		public GameObject background;
 	}
+	
 	public List<BiomeChunkList> BiomeChunkLists = new() ;
 	private Dictionary<GameObject, List<KeyValuePair<GameObject, float>>>[] BiomeAdjacencyMatrices ; 
 	
@@ -50,7 +51,8 @@ public class Generation : MonoBehaviour
 	private int biomeSize = 0;
 	[Header("How many chunks per biome?")] 
 	public int maxBiomeChunkCount;
-	// Start is called before the first frame update
+
+	private GameObject currentBackground; 
 	void Start()
 	{
 		gridTrans = GameObject.FindGameObjectWithTag("Grid").transform;
@@ -119,12 +121,17 @@ public class Generation : MonoBehaviour
 
 			//	Debug.Log(chunkX + "    " + adjacencyVector); 
 				BiomeAdjacencyMatrices[biomeIndex].Add(chunkX, adjacencyVector);
+				
+				//Deactivating backgrounds
+				BiomeChunkLists[biomeIndex].background.GetComponent<Transition>().Hide(true);
 			}
 			
 		}
 		//Initiating first biome
 		currentChunkList = BiomeChunkLists[currentBiomeIndex].chunks ;
 		currentAdjacencyMatrix = BiomeAdjacencyMatrices[currentBiomeIndex] ;
+		currentBackground = BiomeChunkLists[currentBiomeIndex].background; 
+		currentBackground.GetComponent<Transition>().Hide(false);
 		
 		//Generating initial chunks
 		foreach (GameObject chunk in tutorialChunks)
@@ -146,6 +153,8 @@ public class Generation : MonoBehaviour
 		// The first correct threshold gives us the new chunk
 		int newChunkIndex = currentAdjacencyMatrix[newChunk].FindIndex(pair => randomFloat <= pair.Value);
 		newChunk = currentAdjacencyMatrix[newChunk][newChunkIndex].Key;
+		
+		// Checking for next biome
 		if (biomeSize > maxBiomeChunkCount)
 		{
 			Debug.Log("Passage au biome suivant");
@@ -157,8 +166,13 @@ public class Generation : MonoBehaviour
 			currentAdjacencyMatrix = BiomeAdjacencyMatrices[currentBiomeIndex];
 			newChunk = currentChunkList[Random.Range(0, currentChunkList.Count)];
 			if(nextBiomeEvent != null) nextBiomeEvent(this); 
+			//Setting up background
+			currentBackground.GetComponent<Transition>().FadeOut();
+			currentBackground = BiomeChunkLists[currentBiomeIndex].background; 
+			currentBackground.GetComponent<Transition>().FadeIn();
 		}
-
+		
+		biomeSize++;
 		SpawnChunk(newChunk);
 		
 	}
@@ -180,7 +194,6 @@ public class Generation : MonoBehaviour
 		//updating chunk index in the terrain window
 		currentChunkIndex = (currentChunkIndex + 1) % terrainWindowSize;
 
-		biomeSize++;
 
 	}
 	public GameObject[] getTerrain()

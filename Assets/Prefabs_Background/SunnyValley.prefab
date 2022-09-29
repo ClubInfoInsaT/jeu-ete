@@ -647,6 +647,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3979181115098857016}
   - component: {fileID: 3979181115098857017}
+  - component: {fileID: 6769245719671280560}
   m_Layer: 0
   m_Name: SunnyValley
   m_TagString: Untagged
@@ -726,6 +727,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6769245719671280560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3979181115098857018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 380fd89d38a48e72abeb0e91e3d52c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3979181115404774394
 GameObject:
   m_ObjectHideFlags: 0
